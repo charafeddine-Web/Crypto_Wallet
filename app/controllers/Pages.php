@@ -9,4 +9,6 @@ class Pages extends Controller
     public function index(){
         echo "Welcome to queenCrypto";
     }
+
+
 }
