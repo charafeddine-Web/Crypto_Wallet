@@ -1,4 +1,5 @@
 <?php
+session_start();
 // DB PARAMS
 define('DB_HOST','localhost');
 define('DB_USER','postgres');
