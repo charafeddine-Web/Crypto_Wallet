@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="flex items-baseline gap-2">
-            <span class="text-4xl font-bold">2,459.84</span>
+            <span class="text-4xl font-bold"><?php echo $data['soldusdt'] ?></span>
             <span class="text-xl text-gray-400">USDT</span>
         </div>
     </div>

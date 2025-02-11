@@ -15,9 +15,10 @@ Class CryptoController extends Controller {
 
             $this->currentModel->depositUSDT($data);
 
+            $_SESSION['success'] = 'You have successfully deposited ' . $USDTcount . ' USDT';
+
             header('Location: ' . URLROOT . '/PagesController/my_wallet');
             exit();
-
         }
     }
 }
