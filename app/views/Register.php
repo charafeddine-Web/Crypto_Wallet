@@ -12,19 +12,26 @@
 <div class="form-container">
     <p class="title">Welcome back</p>
 
-    <?php if (isset($_SESSION['session_error']) && !empty($_SESSION['session_error'])) : ?>
-        <div class="error-message">
-            <?php
-            foreach ($_SESSION['session_error'] as $error) {
-                echo "<p>$error</p>";
-            }
-            unset($_SESSION['session_error']);
-            ?>
+    <?php if (isset($_SESSION['session_error']) && is_array($_SESSION['session_error'])): ?>
+        <div class="error-messages">
+            <?php foreach ($_SESSION['session_error'] as $error): ?>
+                <p><?php echo htmlspecialchars($error); ?></p>
+            <?php endforeach; ?>
         </div>
+        <?php unset($_SESSION['session_error']); ?>
     <?php endif; ?>
+    <?php if (isset($_SESSION['session_success']) && is_array($_SESSION['session_success'])): ?>
+        <div class="success-messages">
+            <?php foreach ($_SESSION['session_success'] as $error): ?>
+                <p><?php echo htmlspecialchars($error); ?></p>
+            <?php endforeach; ?>
+        </div>
+        <?php unset($_SESSION['session_success']); ?>
+    <?php endif; ?>
+
     <form class="form" method="POST" action="<?=  URLROOT?>/AuthController/register">
         <input type="text" class="input" name="firstname" placeholder=" First Name">
-        <input type="email" class="input" name="lastname" placeholder=" Last Name ">
+        <input type="text" class="input" name="lastname" placeholder=" Last Name ">
         <input type="email" class="input" name="email" placeholder="Email">
         <input type="password" class="input" name="password" placeholder="Password">
         <p class="page-link">

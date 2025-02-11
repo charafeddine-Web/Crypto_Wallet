@@ -1,6 +1,5 @@
 /* From Uiverse.io by akshat-patel28 */
 /*session_errou*/
-
 .error-message {
     background-color: #ffdddd;
     color: #d8000c;
@@ -10,6 +9,19 @@
     text-align: center;
 }
 .error-message p {
+    margin: 5px 0;
+}
+
+
+.success-messages{
+    background-color: green;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+.success-messages p {
     margin: 5px 0;
 }
 
