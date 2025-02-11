@@ -4,7 +4,7 @@ class User
     private $db;
 
     public function __construct(){
-        $this->db = new Database;
+        $this->db = new Database();
     }
 
     public function register($data)
@@ -12,27 +12,18 @@ class User
         session_start();
         try {
             // Vérifier si l'email existe déjà
-            $query="SELECT id FROM users WHERE email = ?";
-            $stmt = $this->db->prepare($query);
-            $stmt->execute($data['email']);
+            $this->db->query("SELECT id FROM users WHERE email = ?");
+            $stmt=$this->db->execute([$data['email']]);
 
             if ($stmt->rowCount() > 0) {
-                $_SESSION["session_error"]="Cet email est déjà utilisé.";
+                $_SESSION["session_error"] = "This email is already in use.";
                 return false;
             }
-            $hashedPassword = password_hash($data['$password'], PASSWORD_BCRYPT);
 
-            $stmt = $this->db->prepare("INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)");
-            $stmt->bindParam('s', $data['firstname']);
-            $stmt->bindParam('s', $data['lastname']);
-            $stmt->bindParam('s', $data['email']);
-            $stmt->bindParam('s', $data['password']);
-            if($stmt->execute()){
-                return true;
-            } else {
-                return false;
-            }
-//            return "Inscription réussie !";
+            $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+
+            $stmt = $this->db->query("INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)");
+            return $this->db->execute([$data['firstname'], $data['lastname'], $data['email'], $hashedPassword]);
         } catch (PDOException $e) {
             return "Erreur lors de l'inscription : " . $e->getMessage();
         }

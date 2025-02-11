@@ -1,6 +1,19 @@
 /* From Uiverse.io by akshat-patel28 */
+/*session_errou*/
 
-/* register.css */
+.error-message {
+    background-color: #ffdddd;
+    color: #d8000c;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+.error-message p {
+    margin: 5px 0;
+}
+
+/* auth.css */
 body {
     display: flex;
     justify-content: center;
