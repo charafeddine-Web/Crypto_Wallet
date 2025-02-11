@@ -5,6 +5,16 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-slate-900 text-white min-h-screen">
+
+<!--success message-->
+<?php if(isset($_SESSION['success'])): ?>
+<div id="topModal" class="fixed top-0 left-0 w-full bg-green-400 shadow-md p-4 flex items-center justify-between">
+    <span class="text-lg font-semibold text-white-800"><?php echo $_SESSION['success'] ?></span>
+    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-800">&times;</button>
+</div>
+<?php unset($_SESSION['success']) ?>
+<?php endif; ?>
+
 <!-- Send Modal -->
 <div id="sendModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-slate-800 rounded-xl p-6 w-full max-w-md">
@@ -156,6 +166,13 @@
     function toggleModal(modalname) {
         const modal = document.getElementById(modalname);
         modal.classList.toggle('hidden');
+    }
+
+    function openModal() {
+        document.getElementById("topModal").style.display = "flex";
+    }
+    function closeModal() {
+        document.getElementById("topModal").style.display = "none";
     }
 </script>
 </body>
