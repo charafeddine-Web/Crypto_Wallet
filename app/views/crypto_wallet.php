@@ -9,15 +9,12 @@
 <div id="sendModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-slate-800 rounded-xl p-6 w-full max-w-md">
         <div class="flex justify-between items-center mb-6">
-            <div>
-                <h3 class="text-xl font-semibold">Send USDT</h3>
-                <p></p>
-            </div>
-            <button onclick="toggleModal()" class="text-gray-400 hover:text-white">
-                <i data-lucide="x" class="w-6 h-6"></i>
+            <h3 class="text-xl font-semibold">Send USDT</h3>
+            <button onclick="toggleModal('sendModal')" class="text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6 cursor-pointer">x</i>
             </button>
         </div>
-        <form action="" class="space-y-4">
+        <form action="<?php echo URLROOT ?>/CryptoController/SendUSDT" class="space-y-4" method="post">
             <div>
                 <label class="block text-sm font-medium mb-2">Recipient Email</label>
                 <input type="email" name="receive_name" class="w-full bg-slate-700 rounded-lg px-4 py-2 text-white" placeholder="Enter recipient's email">
@@ -26,11 +23,31 @@
                 <label class="block text-sm font-medium mb-2">Amount (USDT)</label>
                 <input name="sendAmount" type="number" class="w-full bg-slate-700 rounded-lg px-4 py-2 text-white" placeholder="0.00">
             </div>
-            <button class="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-lg font-medium">
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-lg font-medium">
                 Send USDT
             </button>
         </form>
         </div>
+    </div>
+
+<!--deposit modal-->
+<div id="depositModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-slate-800 rounded-xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-semibold">Deposit</h3>
+            <button onclick="toggleModal('depositModal')" class="text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6 cursor-pointer">x</i>
+            </button>
+        </div>
+        <form action="<?php echo URLROOT ?>/CryptoController/depositUSDT" class="space-y-4" method="post">
+            <div>
+                <label class="block text-sm font-medium mb-2">Amount (USDT)</label>
+                <input name="depositAmount" type="number" class="w-full bg-slate-700 rounded-lg px-4 py-2 text-white" placeholder="0.00">
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-lg font-medium">
+                Deposit
+            </button>
+        </form>
     </div>
 </div>
 
@@ -40,10 +57,10 @@
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold">Wallet Balance</h2>
             <div class="flex gap-2">
-                <button onclick="toggleModal()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm">
+                <button onclick="toggleModal('sendModal')" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm">
                     Send
                 </button>
-                <button class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg text-sm">
+                <button onclick="toggleModal('depositModal')" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg text-sm">
                     Deposit
                 </button>
             </div>
@@ -136,8 +153,8 @@
     lucide.createIcons();
 
     // Modal toggle function
-    function toggleModal() {
-        const modal = document.getElementById('sendModal');
+    function toggleModal(modalname) {
+        const modal = document.getElementById(modalname);
         modal.classList.toggle('hidden');
     }
 </script>

@@ -1,6 +1,6 @@
 <?php
 
-Class CryptoController extends Controller{
+Class CryptoController extends Controller {
     private $currentModel;
 
     public function __construct(){
@@ -9,15 +9,15 @@ Class CryptoController extends Controller{
 
     public function depositUSDT(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $USDTcount = $_POST['USDTcount'];
+            $USDTcount = $_POST['depositAmount'];
 
             $data = ['soldeUSDT' => $USDTcount];
 
-            if($this->currentModel->depositUSDT($data)){
-                // redirection && confirmation models
-                $_SESSION['session_success'] = 'Your USDT has been deposited';
-                // here is header location
-            }
+            $this->currentModel->depositUSDT($data);
+
+            header('Location: ' . URLROOT . '/PagesController/my_wallet');
+            exit();
+
         }
     }
 }
