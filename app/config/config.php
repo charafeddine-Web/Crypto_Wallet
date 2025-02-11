@@ -6,7 +6,6 @@ define('DB_PASS','__DBPASSWORD__');
 define('DB_NAME','__DBNAME__');
 
 
-
 // App Root
 define('APPROOT',dirname(dirname(__FILE__)));
 // Url Root

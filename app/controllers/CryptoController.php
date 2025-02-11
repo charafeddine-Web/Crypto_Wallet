@@ -7,4 +7,10 @@ Class CryptoController extends Controller{
         $this->currentModel = $this->model('Crypto');
     }
 
+    public function buyCrypto(){
+        $crypto = $this->model('Crypto');
+        $data = $crypto->buyCrypto();
+        $this->view('Crypto/buyCrypto', $data);
+    }
+
 }
