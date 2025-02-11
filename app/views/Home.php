@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="relative">
-                <img src="d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
+                <img src="./public/img/d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
                 <!-- Floating Elements -->
                 <div class="absolute -top-6 -left-6 bg-card-dark p-4 rounded-lg border border-white/10 shadow-xl animate-fade-in">
                     <div class="flex items-center space-x-3">

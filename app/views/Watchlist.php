@@ -151,9 +151,13 @@
         <!-- Crypto Card -->
         <div class="group bg-card-dark rounded-2xl p-6 hover:shadow-xl hover:shadow-accent-primary/5 transition-all relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <button class="absolute top-4 right-4 bg-red-500/10 p-2 rounded-lg text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/20">
-                <i class="fas fa-trash-alt"></i>
-            </button>
+            <form action="<?php echo URLROOT ?>/WatchListController/removeCrypto" method="POST">
+                <input type="hidden" name="crypto_id" value="<?php echo 8 ?>">
+                <input type="hidden" name="user_id" value="<?php echo 8 ?>">
+                <button type="submit" class="absolute top-4 right-4 bg-red-500/10 p-2 rounded-lg text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/20">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </form>
             <div class="flex justify-between items-start mb-6">
                 <div class="flex items-center space-x-4">
                     <div class="bg-white/5 p-2 rounded-xl">

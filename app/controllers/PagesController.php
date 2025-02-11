@@ -5,8 +5,17 @@ class PagesController extends Controller
     {
 
     }
-    public function index(){
-        echo "Welcome to queenCrypto";
+    public function home(){
+        $this->view('home');
+    }
+
+    public function dashboard(){
+        $this->view('Dashboard');
+    }
+
+
+    public function Watchlist(){
+        $this->view('Watchlist');
     }
 
 
