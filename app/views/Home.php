@@ -46,6 +46,7 @@
 <div class="relative overflow-hidden">
     <!-- Background Gradient -->
     <div class="absolute inset-0 bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20"></div>
+
     <!-- Navigation -->
     <nav class="relative z-10 border-b border-white/10 bg-ultra-dark/80 backdrop-blur-xl">
         <div class="container mx-auto px-4">
@@ -58,7 +59,7 @@
                         <a href="<?php echo URLROOT ?>/" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Home</a>
                         <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
                         <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Trade</a>
-                        <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
+                        <a href="<?php echo URLROOT ?>/PagesController/watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -103,7 +104,7 @@
                 </div>
             </div>
             <div class="relative">
-                <img src="./public/img/d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
+                <img src="d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
                 <!-- Floating Elements -->
                 <div class="absolute -top-6 -left-6 bg-card-dark p-4 rounded-lg border border-white/10 shadow-xl animate-fade-in">
                     <div class="flex items-center space-x-3">
@@ -177,18 +178,6 @@
         </div>
     </div>
 </div>
-<?php
-function formatNumber($number) {
-    if ($number >= 1000000000) {
-        return number_format($number / 1000000000, 1) . 'B';
-    } elseif ($number >= 1000000) {
-        return number_format($number / 1000000, 1) . 'M';
-    } else {
-        return number_format($number, 1);
-    }
-}
-?>
-
 
 <!-- Market Overview -->
 <div class="py-20 bg-card-dark/50">
@@ -209,20 +198,36 @@ function formatNumber($number) {
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($data['data'] as $coin): ?>
                 <tr class="border-t border-white/5 hover:bg-card-dark/50 transition-all duration-200">
                     <td class="py-4">
                         <div class="flex items-center space-x-3">
-                            <span class="font-medium"><?php echo $coin['name'] ?></span>
-                            <span class="text-text-secondary"><?php echo $coin['symbol'] ?></span>
+                            <div class="w-8 h-8 bg-warning/10 rounded-full flex items-center justify-center">
+                                <i class="fab fa-bitcoin text-warning"></i>
+                            </div>
+                            <span class="font-medium">Bitcoin</span>
+                            <span class="text-text-secondary">BTC</span>
                         </div>
                     </td>
-                    <td class="text-right py-4">$<?php echo number_format($coin['quote']['USD']['price'], 2) ?></td>
-                    <td class="text-right py-4 text-success"><?php echo number_format($coin['quote']['USD']['percent_change_24h'], 2) ?>%</td>
-                    <td class="text-right py-4">$<?php echo formatNumber($coin['quote']['USD']['market_cap']) ?></td>
-                    <td class="text-right py-4">$ <?php echo formatNumber($coin['total_supply']) ?></td>
+                    <td class="text-right py-4">$48,256.12</td>
+                    <td class="text-right py-4 text-success">+5.67%</td>
+                    <td class="text-right py-4">$912.5B</td>
+                    <td class="text-right py-4">$28.5B</td>
                 </tr>
-                <?php endforeach; ?>
+                <tr class="border-t border-white/5 hover:bg-card-dark/50 transition-all duration-200">
+                    <td class="py-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-accent-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fab fa-ethereum text-accent-primary"></i>
+                            </div>
+                            <span class="font-medium">Ethereum</span>
+                            <span class="text-text-secondary">ETH</span>
+                        </div>
+                    </td>
+                    <td class="text-right py-4">$2,856.45</td>
+                    <td class="text-right py-4 text-success">+3.24%</td>
+                    <td class="text-right py-4">$345.2B</td>
+                    <td class="text-right py-4">$15.8B</td>
+                </tr>
                 </tbody>
             </table>
         </div>
