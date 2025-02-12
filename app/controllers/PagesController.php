@@ -17,9 +17,9 @@ class PagesController extends Controller
     }
     
     public function send(){
-        $transactions = []; 
-        $data = ['transaction' => $transactions];
-        $this->view('send');
+        $fromAPI = $this->apimodel->getdatafromapi(10);
+        $data = ['cryptos' => $fromAPI['data']];
+        $this->view('send', $data);
     }
 
 
