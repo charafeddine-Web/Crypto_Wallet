@@ -9,8 +9,8 @@ Class WatchListController extends Controller{
 
     public function removeCrypto() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $userId = $_POST['user_id'];
             $cryptoId = $_POST['crypto_id'];
+            $userId = $_POST['user_id'];
 
             if(!is_numeric($userId)|| !is_numeric($cryptoId)) {
                 echo $userId;

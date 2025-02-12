@@ -8,6 +8,7 @@ class Watchlist {
 
     public function getWatchlist() {
         $query = "SELECT 
+                    c.id_cryptomonnaie,
                     w.creation_date, 
                     c.nom AS crypto_name, 
                     c.symbole AS symbol, 
@@ -19,12 +20,13 @@ class Watchlist {
                     c.volume24h AS volume_24h, 
                     c.circulatingSupply, 
                     c.total_Supply, 
+                    u.nexusid,
                     u.nom AS user_name, 
                     u.prenom AS user_surname, 
                     u.email 
                   FROM Watchlist w
-                  JOIN \"User\" u ON w.user_id = u.NexusId
-                  JOIN Cryptomonnaie c ON w.id_cryptomonnaie = c.id_cryptomonnaie";
+                  JOIN \"User\" u ON w.user_id = u.nexusId
+                  JOIN cryptomonnaie c ON w.id_cryptomonnaie = c.id_cryptomonnaie";
 
         $this->db->query($query);
         $this->db->execute();

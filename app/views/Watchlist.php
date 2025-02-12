@@ -155,8 +155,8 @@
 
             <!-- Delete Button Form -->
             <form action="<?php echo URLROOT ?>/WatchListController/removeCrypto" method="POST" class="absolute top-4 right-4 flex space-x-2">
-                <input type="hidden" name="crypto_id" value="8">
-                <input type="hidden" name="user_id" value="8">
+                <input type="" name="crypto_id" value="<?php echo $crypto->id_cryptomonnaie ?>">
+                <input type="" name="user_id" value="<?= $crypto->nexusid ?>">
                 <button type="submit" class="bg-red-500/10 p-2 rounded-lg text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/20">
                     <i class="fas fa-trash-alt"></i>
                 </button>
