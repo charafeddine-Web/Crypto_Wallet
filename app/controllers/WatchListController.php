@@ -28,4 +28,20 @@ Class WatchListController extends Controller{
         }
     }
 
+    public function addToWatchList() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $cryptoId = $_POST['cryptoId'];
+            $userId = $_POST['idUser'];
+        if(!is_numeric($userId)|| !is_numeric($cryptoId)) {
+        echo $userId;
+        echo $cryptoId;
+        }
+        if($this->currentModel->addToWatchList($userId, $cryptoId)) {
+            $_SESSION['session_success'] = 'Crypto added to watchlist';
+        }else{
+            $_SESSION['session_error'] = 'Failed to add crypto to watchlist';
+        }
+        }
+    }
+
 }

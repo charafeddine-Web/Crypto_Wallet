@@ -1,4 +1,5 @@
 <?php
+
 // load Config
 require_once 'config/config.php';
 // load helper

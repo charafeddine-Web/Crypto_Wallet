@@ -25,5 +25,9 @@ class PagesController extends Controller
         $this->view('Watchlist', $data);
     }
 
+    public function Market(){
+        $this->view('Market');
+    }
+
 
 }

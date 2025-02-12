@@ -59,7 +59,7 @@
                         <a href="#" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Home</a>
                         <a href="<?php echo URLROOT ?>/PagesController/watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
                         <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Trade</a>
-                        <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
+                        <a href="<?php echo URLROOT ?>/PagesController/watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">

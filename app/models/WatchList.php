@@ -39,5 +39,12 @@ class Watchlist {
         $this->db->bind(':crypto_id', $cryptoId);
         return $this->db->execute();
     }
+
+    public function addToWatchList($userId, $cryptoId) {
+        $this->db->query("INSERT INTO watchlist (user_id, id_cryptomonnaie) VALUES (:user_id, :crypto_id)");
+        $this->db->bind(':user_id', $userId);
+        $this->db->bind(':crypto_id', $cryptoId);
+        return $this->db->execute();
+    }
 }
 ?>
