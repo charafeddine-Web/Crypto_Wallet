@@ -21,13 +21,13 @@
             ?>
         </div>
     <?php endif; ?>
-    <form class="form">
-        <input type="email" nam="email" class="input" placeholder="Email">
+    <form class="form" method="POST" action="<?=  URLROOT?>/AuthController/login">
+        <input type="email" name="email" class="input" placeholder="Email">
         <input type="password" name="password" class="input" placeholder="Password">
         <p class="page-link">
             <span class="page-link-label">Forgot Password?</span>
         </p>
-        <button class="form-btn" type="submit" name="submit">Log in</button>
+        <button class="form-btn" type="submit" name="submit" >Log in</button>
     </form>
     <p class="sign-up-label">
         Don't have an account?<a href="<?=  URLROOT?>/AuthController/register" class="sign-up-link">Sign up</a>

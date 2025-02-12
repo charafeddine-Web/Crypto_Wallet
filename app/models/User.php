@@ -42,4 +42,13 @@ class User
             return false;
         }
     }
+
+    public function getUserByEmail($email)
+    {
+       $this->db->query("SELECT * FROM users WHERE email = :email");
+        $this->db->bind(':email', $email, PDO::PARAM_STR);
+        $this->db->execute();
+        return $this->db->resultSet();
+    }
+
 }
