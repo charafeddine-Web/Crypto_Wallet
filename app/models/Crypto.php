@@ -27,14 +27,5 @@ Class Crypto {
        return $result->soldusdt;
     }
 
-    public function getTopCryptos($limit = 10) {
-        try {
-            $this->db->query('SELECT * FROM Cryptomonnaie ORDER BY marketCap DESC LIMIT :limit');
-            $this->db->bind(':limit', $limit, PDO::PARAM_INT);
-            $this->db->execute();
-            return $this->db->resultSet();
-        } catch (PDOException $e) {
-            throw new Exception('Error fetching top cryptos: ' . $e->getMessage());
-        }
-    }
+    
 }
