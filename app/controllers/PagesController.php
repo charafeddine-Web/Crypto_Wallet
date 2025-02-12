@@ -30,7 +30,15 @@ class PagesController extends Controller
         $this->view('Watchlist');
     }
 
-    public function market(){
-        $this->view('market');
+    public function market()
+    {
+        $fromAPI = $this->apimodel->getdatafromapi(10);
+        if (!isset($fromAPI['data']) || !is_array($fromAPI['data'])) {
+            $data = ['error' => 'Erreur lors du chargement des cryptos.'];
+        } else {
+            $data = ['cryptos' => $fromAPI['data']];
+        }
+
+        $this->view('market', $data);
     }
 }

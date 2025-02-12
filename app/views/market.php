@@ -87,75 +87,30 @@
                     <tr class="text-text-secondary border-b border-white/5">
                         <th class="text-left p-4">Rank</th>
                         <th class="text-left p-4">Name</th>
-                        <th class="text-right p-4">Price</th>
-                        <th class="text-right p-4">24h Change</th>
-                        <th class="text-right p-4">Market Cap</th>
-                        <th class="text-right p-4">Volume (24h)</th>
-                        <th class="text-center p-4">Watchlist</th>
+                        <th class="text-left p-4">Price</th>
+                        <th class="text-left p-4">24h Change</th>
+                        <th class="text-left p-4">Market Cap</th>
+                        <th class="text-left p-4">Volume (24h)</th>
+                        <th class="text-left p-4">Circulating Supply</th>
+                        <th class="text-left p-4">Watchlist</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- Bitcoin -->
-                    <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">1</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fab fa-bitcoin text-warning"></i>
-                                <span class="font-medium text-text-primary">Bitcoin</span>
-                                <span class="text-text-secondary">BTC</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$65,432.10</td>
-                        <td class="text-right p-4 text-success">+2.5%</td>
-                        <td class="text-right p-4 text-text-primary">$1.28T</td>
-                        <td class="text-right p-4 text-text-primary">$28.5B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Ethereum -->
-                    <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">2</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fab fa-ethereum text-accent-primary"></i>
-                                <span class="font-medium text-text-primary">Ethereum</span>
-                                <span class="text-text-secondary">ETH</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$3,521.80</td>
-                        <td class="text-right p-4 text-success">+3.2%</td>
-                        <td class="text-right p-4 text-text-primary">$421.6B</td>
-                        <td class="text-right p-4 text-text-primary">$15.2B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Binance Coin -->
-                    <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">3</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fas fa-coins text-warning"></i>
-                                <span class="font-medium text-text-primary">Binance Coin</span>
-                                <span class="text-text-secondary">BNB</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$456.75</td>
-                        <td class="text-right p-4 text-danger">-1.2%</td>
-                        <td class="text-right p-4 text-text-primary">$75.8B</td>
-                        <td class="text-right p-4 text-text-primary">$5.4B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Add more rows for other cryptocurrencies -->
+                        <?php foreach ($data['cryptos'] as $crypto) : ?>
+                            <tr>
+                            <td class="text-left p-4"><?= htmlspecialchars($crypto['cmc_rank']); ?></td>
+                                <td class="text-left p-4"><?= htmlspecialchars($crypto['name']); ?> (<?= htmlspecialchars($crypto['symbol']); ?>)</td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['price'], 2); ?></td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?></td>
+                                <td class="text-left p-4 font-bold"
+                                    style="color: <?= $crypto['quote']['USD']['percent_change_24h'] >= 0 ? 'green' : 'red'; ?>;">
+                                    <?= number_format($crypto['quote']['USD']['percent_change_24h'], 2); ?>%
+                                </td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?></td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['volume_24h'], 0, '.', ','); ?></td>
+                                <td class="text-center p-4 cursor-pointer"><i class="fas fa-star mr-2  hover:text-yellow-500"></i></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
