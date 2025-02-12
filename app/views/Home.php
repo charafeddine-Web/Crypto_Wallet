@@ -56,7 +56,7 @@
                         Nexus
                     </h1>
                     <div class="hidden md:flex space-x-6">
-                        <a href="#" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Home</a>
+                        <a href="<?php echo URLROOT ?>/" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Home</a>
                         <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
                         <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Trade</a>
                         <a href="<?php echo URLROOT ?>/PagesController/watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="relative">
-                <img src="./public/img/d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
+                <img src="d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
                 <!-- Floating Elements -->
                 <div class="absolute -top-6 -left-6 bg-card-dark p-4 rounded-lg border border-white/10 shadow-xl animate-fade-in">
                     <div class="flex items-center space-x-3">
