@@ -1,9 +1,10 @@
 <?php
+session_start();
 // DB PARAMS
 const DB_HOST = 'localhost';
 const DB_USER = 'postgres';
-const DB_PASS = 'Charaf2025';
-const DB_NAME = 'crypto_wallet';
+const DB_PASS = 'Wissam0908';
+const DB_NAME = 'QueenCrypto';
 
 
 

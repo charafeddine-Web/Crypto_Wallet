@@ -11,7 +11,8 @@ Class Crypto {
     // for deposit USDT in user account
     public function depositUSDT($data){
         try {
-            $this->db->query('UPDATE portefeuille SET soldusdt = soldusdt + :soldeUSDT WHERE user_id = 2');
+            $this->db->query('UPDATE portefeuille SET soldusdt = soldusdt + :soldeUSDT WHERE user_id = :user_id');
+            $this->db->bind(':user_id', $_SESSION['user_id']);
             $this->db->bind(':soldeUSDT', $data['soldeUSDT']);
             $this->db->execute();
         }
@@ -21,7 +22,8 @@ Class Crypto {
     }
 
     public function getsoldeUSDT(){
-        $this->db->query('SELECT soldusdt FROM portefeuille WHERE user_id = 2');
+        $this->db->query('SELECT soldusdt FROM portefeuille WHERE user_id = :user_id');
+        $this->db->bind(':user_id', $_SESSION['user_id']);
         $this->db->execute();
        $result = $this->db->single();
        return $result->soldusdt;
