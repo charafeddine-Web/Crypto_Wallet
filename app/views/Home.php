@@ -57,6 +57,7 @@
                     <div class="hidden md:flex space-x-6">
                         <a href="<?php echo URLROOT ?>/" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Home</a>
                         <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
+                        <a href="<?php echo URLROOT ?>/PagesController/send" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Transfer</a>
                         <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Trade</a>
                         <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
                     </div>
