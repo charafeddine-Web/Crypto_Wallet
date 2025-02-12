@@ -47,27 +47,55 @@ class AuthController extends Controller
                 'password' => $hashedPassword,
                 'verification_code' => $verification_code,
             ];
+            $userId = $this->User->register($data);
+            if ($userId) {
+                // Création d'un portefeuille
+                if ($this->User->createWallet($userId)) {
+                    $_SESSION['email'] = $email;
+                    $_SESSION['firstname'] = $firstname;
+                    $_SESSION['lastname'] = $lastname;
+                    $_SESSION['verification_code'] = $verification_code;
+                    $_SESSION['verification_code_expire'] = time() + 600;
 
-            if ($this->User->register($data)) {
-                $_SESSION['email'] = $email;
-                $_SESSION['firstname'] = $firstname;
-                $_SESSION['lastname'] = $lastname;
-
-                $_SESSION['verification_code'] = $verification_code;
-                $_SESSION['verification_code_expire'] = time() + 600;
-                if ($this->sendVerificationEmail($email, $verification_code)) {
-                    $_SESSION['session_success'] = ["Account created successfully. Please check your email to verify your account."];
-                    header('Location: /Crypto_Wallet/AuthController/verify');
+                    if ($this->sendVerificationEmail($email, $verification_code)) {
+                        $_SESSION['session_success'] = ["Account created successfully. Please check your email to verify your account."];
+                        header('Location: /Crypto_Wallet/AuthController/verify');
+                    } else {
+                        $_SESSION['session_error'] = ["Account created, but we couldn't send the verification email. Please contact support."];
+                        header('Location: /Crypto_Wallet/AuthController/register');
+                    }
+                    exit();
                 } else {
-                    $_SESSION['session_error'] = ["Account created, but we couldn't send the verification email. Please contact support."];
+                    $_SESSION['session_error'] = ["User created, but failed to create wallet."];
                     header('Location: /Crypto_Wallet/AuthController/register');
+                    exit();
                 }
-                exit();
             } else {
                 $_SESSION['session_error'] = ["Something went wrong. Please try again."];
                 header('Location: /Crypto_Wallet/AuthController/register');
                 exit();
             }
+
+//            if ($this->User->register($data)) {
+//                $_SESSION['email'] = $email;
+//                $_SESSION['firstname'] = $firstname;
+//                $_SESSION['lastname'] = $lastname;
+//
+//                $_SESSION['verification_code'] = $verification_code;
+//                $_SESSION['verification_code_expire'] = time() + 600;
+//                if ($this->sendVerificationEmail($email, $verification_code)) {
+//                    $_SESSION['session_success'] = ["Account created successfully. Please check your email to verify your account."];
+//                    header('Location: /Crypto_Wallet/AuthController/verify');
+//                } else {
+//                    $_SESSION['session_error'] = ["Account created, but we couldn't send the verification email. Please contact support."];
+//                    header('Location: /Crypto_Wallet/AuthController/register');
+//                }
+//                exit();
+//            } else {
+//                $_SESSION['session_error'] = ["Something went wrong. Please try again."];
+//                header('Location: /Crypto_Wallet/AuthController/register');
+//                exit();
+//            }
         }
         $this->view('register');
     }
