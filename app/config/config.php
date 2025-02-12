@@ -1,4 +1,5 @@
 <?php
+session_start();
 // DB PARAMS
 const DB_HOST = 'localhost';
 const DB_USER = 'postgres';

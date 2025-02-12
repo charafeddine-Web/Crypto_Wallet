@@ -8,7 +8,7 @@ class PagesController extends Controller
     {
         $this->watchlistModel = $this->model('WatchList');
     }
-    public function home(){
+    public function index(){
         $this->view('Home');
     }
 
@@ -24,9 +24,7 @@ class PagesController extends Controller
         ];
         $this->view('Watchlist', $data);
     }
-    public function index(){
-        echo "Welcome to queenCrypto";
-    }
+
 
 
 }
