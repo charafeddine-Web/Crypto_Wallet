@@ -34,21 +34,23 @@ class User
     public function activateAccount($email)
     {
         try {
-            $query = "UPDATE users SET is_active = 1 WHERE email = ?";
-            $stmt = $this->db->prepare($query);
-            return $stmt->execute([$email]); // Fixed execution
+            $this->db->query("UPDATE users SET is_active = '1' WHERE email = :email");
+            $this->db->bind(':email', $email);
+            return $this->db->execute();
         } catch (PDOException $e) {
             error_log("Error activating account: " . $e->getMessage());
             return false;
         }
     }
 
+
+
     public function getUserByEmail($email)
     {
        $this->db->query("SELECT * FROM users WHERE email = :email");
-        $this->db->bind(':email', $email, PDO::PARAM_STR);
+        $this->db->bind(':email', $email);
         $this->db->execute();
-        return $this->db->resultSet();
+        return $this->db->single();
     }
 
 }

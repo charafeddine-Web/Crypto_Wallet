@@ -54,10 +54,10 @@ class AuthController extends Controller
                 $_SESSION['lastname'] = $lastname;
 
                 $_SESSION['verification_code'] = $verification_code;
-                $_SESSION['verification_code_expire'] = time() + 3600;
+                $_SESSION['verification_code_expire'] = time() + 600;
                 if ($this->sendVerificationEmail($email, $verification_code)) {
                     $_SESSION['session_success'] = ["Account created successfully. Please check your email to verify your account."];
-                    header('Location: /Crypto_Wallet/AuthController/login');
+                    header('Location: /Crypto_Wallet/AuthController/verify');
                 } else {
                     $_SESSION['session_error'] = ["Account created, but we couldn't send the verification email. Please contact support."];
                     header('Location: /Crypto_Wallet/AuthController/register');
@@ -91,13 +91,7 @@ class AuthController extends Controller
 
             $mail->Body = "<p>Please enter the following code to verify your account:</p>
                <p>Your verification code is: <strong>$verification_code</strong></p>
-               <p>If you can't click the link, copy the code and paste it in the form below:</p>
-               <form action='http://" . $_SERVER['HTTP_HOST'] . "/Crypto_Wallet/AuthController/verifyAccount' method='POST'>
-                   <label for='code'>Enter Verification Code:</label>
-                   <input type='text' id='code' name='code' value='$verification_code' readonly>
-                   <button type='submit'>Verify My Account</button>
-               </form>";
-
+               ";
             if ($mail->send()) {
                 return true;
             } else {
@@ -110,28 +104,43 @@ class AuthController extends Controller
         }
     }
 
-    public function verifyAccount()
+    public function verify()
     {
         session_start();
-        if (!isset($_GET['code']) || !isset($_SESSION['verification_code']) || $_SESSION['verification_code'] !== $_GET['code']) {
-            $_SESSION['session_error'] = ["Invalid or expired verification code."];
+
+        if (!isset($_SESSION['email']) || !isset($_SESSION['verification_code'])) {
+            $_SESSION['session_error'] = ["You need to register first."];
             header('Location: /Crypto_Wallet/AuthController/register');
             exit();
         }
-        if ($_SESSION['verification_code_expire'] < time()) {
-            $_SESSION['session_error'] = ["Verification code has expired. Please request a new one."];
-            header('Location: /Crypto_Wallet/AuthController/register');
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
+            $entered_code = trim($_POST['verification_code']);
+
+            if ($entered_code !== $_SESSION['verification_code']) {
+                $_SESSION['session_error'] = ["Invalid  verification code."];
+                header('Location: /Crypto_Wallet/AuthController/verify');
+                exit();
+            }
+            if ($_SESSION['verification_code_expire'] < time()) {
+                $_SESSION['session_error'] = ["Verification code has expired. Please request a new one."];
+                header('Location: /Crypto_Wallet/AuthController/verify');
+                exit();
+            }
+            $result = $this->User->activateAccount($_SESSION['email']);
+            if ($result) {
+                unset($_SESSION['verification_code'], $_SESSION['verification_code_expire']);
+                $_SESSION['session_success'] = ["Your account has been verified. You can now log in."];
+                header('Location: /Crypto_Wallet/AuthController/login');
+            }else {
+                $_SESSION['session_error'] = ["Something went wrong. Please try again."];
+                header('Location: /Crypto_Wallet/AuthController/verify');
+            }
             exit();
+
         }
-        if ($this->User->activateAccount($_SESSION['email'])) {
-            unset($_SESSION['verification_code'], $_SESSION['verification_code_expire']);
-            $_SESSION['session_success'] = ["Your account has been verified. You can now log in."];
-            header('Location: /Crypto_Wallet/AuthController/login');
-        } else {
-            $_SESSION['session_error'] = ["Something went wrong. Please try again."];
-            header('Location: /Crypto_Wallet/AuthController/register');
-        }
-        exit();
+
+        $this->view('verify');
     }
 
     public function login()
@@ -146,27 +155,31 @@ class AuthController extends Controller
                 header('Location: /Crypto_Wallet/AuthController/login');
                 exit();
             }
+
             $user = $this->User->getUserByEmail($email);
+
             if (!$user) {
                 $_SESSION['session_error'] = ["Invalid email or password."];
                 header('Location: /Crypto_Wallet/AuthController/login');
                 exit();
             }
-            if ($user['is_active'] == 0) {
+
+            if ($user->is_active == '0') {
                 $_SESSION['session_error'] = ["Please verify your account before logging in."];
                 header('Location: /Crypto_Wallet/AuthController/login');
                 exit();
             }
 
-            if (!password_verify($password, $user['password'])) {
+            if (!password_verify($password, $user->mot_de_pass)) {
                 $_SESSION['session_error'] = ["Invalid email or password."];
                 header('Location: /Crypto_Wallet/AuthController/login');
                 exit();
             }
-            $_SESSION['user_id'] = $user['nexusId'];
-            $_SESSION['firstname'] = $user['nom'];
-            $_SESSION['lastname'] = $user['prenom'];
-            $_SESSION['user_email'] = $user['email'];
+
+            $_SESSION['user_id'] = $user->nexusid;
+            $_SESSION['firstname'] = $user->nom;
+            $_SESSION['lastname'] = $user->prenom;
+            $_SESSION['user_email'] = $user->email;
             $_SESSION['session_success'] = ["Login successful!"];
 
             header('Location: /Crypto_Wallet/PagesController/index');
@@ -175,5 +188,6 @@ class AuthController extends Controller
 
         $this->view('login');
     }
+
 
 }

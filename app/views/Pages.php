@@ -1,2 +1,4 @@
 <?php
-echo 'hadi home';
+session_start();
+
+echo 'hello  home'.$_SESSION['email'];
