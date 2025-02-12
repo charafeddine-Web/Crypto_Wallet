@@ -3,13 +3,17 @@ class PagesController extends Controller
 {
 
     private $cryptoModel;
+    private $apimodel;
 
     public function __construct()
     {
         $this->cryptoModel = $this->model('Crypto');
+        $this->apimodel = $this->model('APImodel');
     }
     public function index(){
-        $this->view('Home');
+        $fromAPI = $this->apimodel->getdatafromapi(3);
+        $data = ['data' => $fromAPI['data']];
+        $this->view('Home', $data);
     }
 
     public function my_wallet(){
@@ -24,5 +28,9 @@ class PagesController extends Controller
 
     public function watch_list(){
         $this->view('Watchlist');
+    }
+
+    public function market(){
+        $this->view('market');
     }
 }
