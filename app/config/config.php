@@ -2,8 +2,8 @@
 // DB PARAMS
 define('DB_HOST','localhost');
 define('DB_USER','postgres');
-define('DB_PASS','__DBPASSWORD__');
-define('DB_NAME','__DBNAME__');
+define('DB_PASS','barca1230/');
+define('DB_NAME','QueenCrypto');
 
 
 // App Root
