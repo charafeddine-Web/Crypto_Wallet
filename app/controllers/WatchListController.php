@@ -2,11 +2,9 @@
 
 Class WatchListController extends Controller{
     private $currentModel;
-
     public function __construct(){
         $this->currentModel = $this->model('WatchList');
     }
-
     public function removeCrypto() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $cryptoId = $_POST['crypto_id'];
@@ -20,6 +18,8 @@ Class WatchListController extends Controller{
 
             if($this->currentModel->removeCrypto($userId, $cryptoId)) {
                 $_SESSION['session_success'] = 'Crypto removed from watchlist';
+                header("Location: /Crypto_Wallet/PagesController/Watchlist");
+                exit();
             } else {
                 $_SESSION['session_error'] = 'Failed to remove crypto from watchlist';
             }
@@ -27,7 +27,6 @@ Class WatchListController extends Controller{
             header("Location: /Home");
         }
     }
-
     public function addToWatchList() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $cryptoId = $_POST['cryptoId'];
@@ -38,6 +37,8 @@ Class WatchListController extends Controller{
         }
         if($this->currentModel->addToWatchList($userId, $cryptoId)) {
             $_SESSION['session_success'] = 'Crypto added to watchlist';
+            header("Location: /Crypto_Wallet/PagesController/Market");
+            exit();
         }else{
             $_SESSION['session_error'] = 'Failed to add crypto to watchlist';
         }

@@ -97,8 +97,8 @@
                     <tbody>
                     <!-- Bitcoin -->
                     <form action="<?php echo URLROOT ?>/WatchListController/addToWatchList" method="POST">
-                        <input type="" name="cryptoId" value="1">
-                        <input type="" name="idUser" value="1">
+                        <input type="hidden" name="cryptoId" value="1">
+                        <input type="hidden" name="idUser" value="1">
                         <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
                         <td class="p-4 text-text-primary">1</td>
                         <td class="p-4">
@@ -120,8 +120,8 @@
                     </tr>
                     </form>
                     <form action="<?php echo URLROOT ?>/WatchListController/addToWatchList" method="POST">
-                        <input type="" name="cryptoId" value="1">
-                        <input type="" name="idUser" value="2">
+                        <input type="hidden" name="cryptoId" value="1">
+                        <input type="hidden" name="idUser" value="2">
                     <!-- Ethereum -->
                     <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
                         <td class="p-4 text-text-primary">2</td>

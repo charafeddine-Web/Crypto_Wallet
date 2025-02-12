@@ -25,7 +25,7 @@ class Watchlist {
                     u.prenom AS user_surname, 
                     u.email 
                   FROM Watchlist w
-                  JOIN \"User\" u ON w.user_id = u.nexusId
+                  JOIN users u ON w.user_id = u.nexusId
                   JOIN cryptomonnaie c ON w.id_cryptomonnaie = c.id_cryptomonnaie";
 
         $this->db->query($query);
@@ -47,4 +47,4 @@ class Watchlist {
         return $this->db->execute();
     }
 }
-?>
+
