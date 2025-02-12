@@ -197,5 +197,12 @@ class AuthController extends Controller
         $this->view('login');
     }
 
+    public function logout(){
+        session_start();
+        session_destroy();
+        header('Location: /Crypto_Wallet/AuthController/login');
+        exit();
+    }
+
 
 }

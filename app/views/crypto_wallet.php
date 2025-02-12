@@ -1,19 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<!-- Previous head content remains the same -->
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Crypto - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ultra-dark': '#0A0F1C',
+                        'card-dark': '#151C2F',
+                        'accent-primary': '#6366F1',
+                        'accent-secondary': '#8B5CF6',
+                        'text-primary': '#E2E8F0',
+                        'text-secondary': '#64748B'
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-slate-900 text-white min-h-screen">
 
 <!--success message-->
 <?php if(isset($_SESSION['success'])): ?>
-<div id="topModal" class="fixed top-0 left-0 w-full bg-green-400 shadow-md p-4 flex items-center justify-between">
+<div id="topModal" class="fixed top-0 left-0 w-full bg-green-400 shadow-md p-4 flex items-center justify-between z-50">
     <span class="text-lg font-semibold text-white-800"><?php echo $_SESSION['success'] ?></span>
     <button onclick="closeModal()" class="text-gray-500 hover:text-gray-800">&times;</button>
 </div>
 <?php unset($_SESSION['success']) ?>
 <?php endif; ?>
+
+<nav class="relative z-10 border-b border-white/10 bg-ultra-dark/80 backdrop-blur-xl">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-8">
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
+                    Nexus
+                </h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="<?php echo URLROOT ?>/" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Home</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
+                </div>
+            </div>
+            <?php if(!isset($_SESSION['user_id'])): ?>
+            <div class="flex items-center space-x-4">
+                <a href="<?php echo URLROOT ?>/AuthController/login" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log in</a>
+                <a href="<?php echo URLROOT ?>/AuthController/register" class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Sign Up</a>
+            </div>
+            <?php else: ?>
+            <div class="flex items-center space-x-4">
+                <a href="<?php echo URLROOT ?>/AuthController/logout" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log out</a>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
 
 <!-- Send Modal -->
 <div id="sendModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
