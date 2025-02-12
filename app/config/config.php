@@ -1,9 +1,9 @@
 <?php
 // DB PARAMS
-define('DB_HOST','localhost');
-define('DB_USER','postgres');
-define('DB_PASS','__DBPASSWORD__');
-define('DB_NAME','__DBNAME__');
+const DB_HOST = 'localhost';
+const DB_USER = 'postgres';
+const DB_PASS = 'Wissam0908';
+const DB_NAME = 'QueenCrypto';
 
 
 
