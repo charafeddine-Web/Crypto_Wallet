@@ -15,6 +15,13 @@ class PagesController extends Controller
         $data = ['data' => $fromAPI['data']];
         $this->view('Home', $data);
     }
+    
+    public function send(){
+        $transactions = []; 
+        $data = ['transaction' => $transactions];
+        $this->view('send');
+    }
+
 
     public function my_wallet(){
         $sold = $this->cryptoModel->getsoldeUSDT();
