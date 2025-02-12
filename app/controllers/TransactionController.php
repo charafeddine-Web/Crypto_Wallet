@@ -1,46 +1,75 @@
 <?php
 
 class TransactionController extends Controller {
-    private $transactionModel;
-    private $userModel;
-
+    private $cryptoModel;
+    private $transaction;
+    private $user;
+    private $wallet;
     public function __construct() {
-        $this->transactionModel = $this->model('TransactionModel');
-        $this->userModel = $this->model('UserModel');
+        $this->cryptoModel = $this->model('Crypto');
+         $this->transaction =$this->model('transact');
+         $this->user=$this->model('user');
+         $this->wallet=$this->model('wallet');
     }
-
-    public function sendCrypto() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $receiverIdentifier = trim($_POST['receiver']);
-            $cryptoId = intval($_POST['crypto_id']);
-            $amount = floatval($_POST['amount']);
-            $senderId = $_SESSION['user_id']; 
-
-            $receiver = $this->transactionModel->getUserByNexusOrEmail($receiverIdentifier);
-
-            if (!$receiver) {
-                $data['error'] = "Utilisateur introuvable avec ce NexusID ou email.";
-                return $this->view('transactions/send', $data);
-            }
-
-            $receiverId = $receiver->NexusId;
-
-            if (!$this->transactionModel->hasSufficientBalance($senderId, $cryptoId, $amount)) {
-                $data['error'] = "Fonds insuffisants.";
-                return $this->view('transactions/send', $data);
-            }
-            $this->transactionModel->debitSender($senderId, $cryptoId, $amount);
-            $this->transactionModel->creditReceiver($receiverId, $cryptoId, $amount);
-            if ($this->transactionModel->createTransaction($senderId, $receiverId, $amount)) {
-                $data['success'] = "Transaction envoyée avec succès !";
-                $data['transaction'] = $this->transactionModel->getTransactionsByUser($senderId); 
-            } else {
-                $data['error'] = "Erreur lors de l’envoi de la transaction.";
-            }
-            $this->view('send', $data);
-            
+    public function Buy_sell_page()
+    {
+        $data = $this->cryptoModel->fetchCryptoData();
+      
+        $this->view('transactions',$data);
+        
+    }
+    /**************buy transac************* */
+    public function add_transac()
+    { 
+        
+        $data = [
+            'cryptoid' => $_POST['cryptoid'],
+            'coin' => $_POST['coin'],
+            'amount' => $_POST['amount'],
+            'cryptoamount' => $_POST['cryptoamount'],
+            'type_transac'=>'buy'
+        ];
+        $this->transaction->buy_transac($data);
+        $this->wallet->add_to_wallet($data);
+        $this->Buy_sell_page();
+        
+    }
+     public function sell_transac(){
+        
+        $data = [
+            'cryptoid' => $_POST['cryptoid'],
+            'cryptoamount' => $_POST['coin_amount'],
+            'type_transac'=>'sell'
+        ];
+        // check if i have the amount 
+        $result = $this->wallet->wallet_sell($data);
+        if($result){
+            $this->transaction->sell_transac($data);
+            $this->Buy_sell_page();
+    
+        }else{
+            echo "You don't have this amount in your wallet";
         }
-
-        $this->view('transactions/send');
+        
+     }
+    public function send_transac(){
+        
+        $coin=$this->wallet->check_Qte($_POST['cryptoid']);
+        $quantite=$coin->qte;
+      
+        if(!is_numeric($_POST['email'])){
+         $receiver=$this->user->check_email_or_nexusID($_POST['email']);
+         $_POST['email']=$receiver->id;
+        }
+    
+        $data = [
+            'cryptoid' => $_POST['cryptoid'],
+            'coin_amount' => $_POST['coin_amount'],
+            'nexusid' => $_POST['email'],
+            'type_transac'=>'send'
+        ];
+        $this->transaction->send_coin($data);
+        
     }
 }
+
