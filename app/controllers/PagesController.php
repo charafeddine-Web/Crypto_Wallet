@@ -1,12 +1,15 @@
 <?php
 class PagesController extends Controller
 {
+
+    private $watchlistModel;
+
     public function __construct()
     {
-
+        $this->watchlistModel = $this->model('WatchList');
     }
     public function home(){
-        $this->view('home');
+        $this->view('Home');
     }
 
     public function dashboard(){
@@ -15,7 +18,11 @@ class PagesController extends Controller
 
 
     public function Watchlist(){
-        $this->view('Watchlist');
+        $crypto = $this->watchlistModel->getWatchlist();
+        $data = [
+            'crypto' => $crypto
+        ];
+        $this->view('Watchlist', $data);
     }
 
 

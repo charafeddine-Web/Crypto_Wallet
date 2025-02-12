@@ -148,28 +148,41 @@
 
     <!-- Crypto Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <!-- Crypto Card -->
+        <?php if (!empty($data['crypto'])): ?>
+        <?php foreach ($data['crypto'] as $crypto): ?>
         <div class="group bg-card-dark rounded-2xl p-6 hover:shadow-xl hover:shadow-accent-primary/5 transition-all relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <form action="<?php echo URLROOT ?>/WatchListController/removeCrypto" method="POST">
-                <input type="hidden" name="crypto_id" value="<?php echo 8 ?>">
-                <input type="hidden" name="user_id" value="<?php echo 8 ?>">
-                <button type="submit" class="absolute top-4 right-4 bg-red-500/10 p-2 rounded-lg text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/20">
+
+            <!-- Delete Button Form -->
+            <form action="<?php echo URLROOT ?>/WatchListController/removeCrypto" method="POST" class="absolute top-4 right-4 flex space-x-2">
+                <input type="hidden" name="crypto_id" value="8">
+                <input type="hidden" name="user_id" value="8">
+                <button type="submit" class="bg-red-500/10 p-2 rounded-lg text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/20">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </form>
+
+            <!-- Sell Button -->
+            <button
+                    id="sellButton"
+                    class="absolute top-4 right-16 bg-blue-500/10 p-2 rounded-lg text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-500/20"
+            >
+                <i class="fas fa-dollar-sign"></i>
+            </button>
+
             <div class="flex justify-between items-start mb-6">
                 <div class="flex items-center space-x-4">
                     <div class="bg-white/5 p-2 rounded-xl">
                         <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin" class="w-10 h-10">
                     </div>
+
                     <div>
-                        <h2 class="text-xl font-bold">Bitcoin</h2>
-                        <p class="text-text-secondary text-sm">BTC</p>
+                        <h2 class="text-xl font-bold"><?= $crypto->crypto_name ?></h2>
+                        <p class="text-text-secondary text-sm"><?= $crypto->symbol ?></p>
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="text-2xl font-bold">$52,345.67</p>
+                    <p class="text-2xl font-bold">$<?= $crypto->price ?></p>
                     <p class="text-emerald-500 text-sm flex items-center justify-end">
                         <i class="fas fa-caret-up mr-1"></i>3.24%
                     </p>
@@ -178,12 +191,58 @@
             <div class="grid grid-cols-2 gap-6">
                 <div class="bg-white/5 p-4 rounded-xl">
                     <p class="text-text-secondary text-sm mb-1">Market Cap</p>
-                    <p class="font-semibold">$1.02T</p>
+                    <p class="font-semibold">$<?= $crypto->market_cap ?>T</p>
                 </div>
                 <div class="bg-white/5 p-4 rounded-xl">
                     <p class="text-text-secondary text-sm mb-1">Volume 24h</p>
-                    <p class="font-semibold">$25.3B</p>
+                    <p class="font-semibold"><?= $crypto->volume_24h ?>B</p>
                 </div>
+            </div>
+        </div>
+
+        <?php endforeach; ?>
+        <?php endif; ?>
+
+        <!-- Sell Modal -->
+        <div id="sellModal" class="fixed inset-0 bg-black/50 items-center justify-center p-4 hidden">
+            <div class="bg-card-dark rounded-xl p-6 w-full max-w-md mx-auto mt-20">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Sell Bitcoin</h3>
+                    <button id="closeModalBtn" class="text-gray-400 hover:text-gray-300">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="sellForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">
+                            Amount to sell (BTC)
+                        </label>
+                        <input
+                                type="number"
+                                id="sellAmount"
+                                class="w-full p-2 rounded-lg bg-white/5 border border-white/10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                placeholder="0.00"
+                                step="0.00000001"
+                                min="0"
+                                required
+                        >
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button
+                                type="button"
+                                id="cancelBtn"
+                                class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                                type="submit"
+                                class="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600"
+                        >
+                            Confirm Sell
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -235,6 +294,6 @@
         </div>
     </section>
 </div>
-
+<script src="../public/js/main.js"></script>
 </body>
 </html>
