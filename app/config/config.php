@@ -1,9 +1,11 @@
 <?php
+session_start();
 // DB PARAMS
 const DB_HOST = 'localhost';
 const DB_USER = 'postgres';
 const DB_PASS = '123456';
 const DB_NAME = 'crypto_walet';
+
 
 
 

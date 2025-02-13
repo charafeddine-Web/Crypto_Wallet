@@ -56,16 +56,22 @@
                         Nexus
                     </h1>
                     <div class="hidden md:flex space-x-6">
-                        <a href="#" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Home</a>
+                        <a href="<?php echo URLROOT ?>/" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Home</a>
                         <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
-                        <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Trade</a>
-                        <a href="<?php echo URLROOT ?>/PagesController/watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
+                        <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
+                        <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Sign In</button>
-                    <button class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Get Started</button>
-                </div>
+                <?php if(!isset($_SESSION['user_id'])): ?>
+                    <div class="flex items-center space-x-4">
+                        <a href="<?php echo URLROOT ?>/AuthController/login" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log in</a>
+                        <a href="<?php echo URLROOT ?>/AuthController/register" class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Sign Up</a>
+                    </div>
+                <?php else: ?>
+                    <div class="flex items-center space-x-4">
+                        <a href="<?php echo URLROOT ?>/AuthController/logout" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log out</a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -104,7 +110,7 @@
                 </div>
             </div>
             <div class="relative">
-                <img src="./public/img/d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
+                <img src="d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
                 <!-- Floating Elements -->
                 <div class="absolute -top-6 -left-6 bg-card-dark p-4 rounded-lg border border-white/10 shadow-xl animate-fade-in">
                     <div class="flex items-center space-x-3">
@@ -198,36 +204,20 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php foreach ($data['data'] as $coin): ?>
                 <tr class="border-t border-white/5 hover:bg-card-dark/50 transition-all duration-200">
                     <td class="py-4">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-warning/10 rounded-full flex items-center justify-center">
-                                <i class="fab fa-bitcoin text-warning"></i>
-                            </div>
-                            <span class="font-medium">Bitcoin</span>
-                            <span class="text-text-secondary">BTC</span>
+                            <span class="font-medium"><?php echo $coin['name'] ?></span>
+                            <span class="text-text-secondary"><?php echo $coin['symbol'] ?></span>
                         </div>
                     </td>
-                    <td class="text-right py-4">$48,256.12</td>
-                    <td class="text-right py-4 text-success">+5.67%</td>
-                    <td class="text-right py-4">$912.5B</td>
-                    <td class="text-right py-4">$28.5B</td>
+                    <td class="text-right py-4">$<?php echo number_format($coin['quote']['USD']['price'], 2) ?></td>
+                    <td class="text-right py-4 text-success"><?php echo number_format($coin['quote']['USD']['percent_change_24h'], 2)?>%</td>
+                    <td class="text-right py-4">$<?php echo number_format($coin['quote']['USD']['market_cap'])?></td>
+                    <td class="text-right py-4"><?php echo number_format($coin['quote']['USD']['volume_24h'])?></td>
                 </tr>
-                <tr class="border-t border-white/5 hover:bg-card-dark/50 transition-all duration-200">
-                    <td class="py-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-accent-primary/10 rounded-full flex items-center justify-center">
-                                <i class="fab fa-ethereum text-accent-primary"></i>
-                            </div>
-                            <span class="font-medium">Ethereum</span>
-                            <span class="text-text-secondary">ETH</span>
-                        </div>
-                    </td>
-                    <td class="text-right py-4">$2,856.45</td>
-                    <td class="text-right py-4 text-success">+3.24%</td>
-                    <td class="text-right py-4">$345.2B</td>
-                    <td class="text-right py-4">$15.8B</td>
-                </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
