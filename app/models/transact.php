@@ -23,7 +23,7 @@ class transact {
         $this->conn->execute();
     }
     public function send_coin($data){
-        $this->conn->query("INSERT INTO transaction (sender_id,reciever,crypto_id,montant) VALUES (:sender,:reciever,:crypto_id,:amount)");
+        $this->conn->query("INSERT INTO transaction (sender_id, receiver, crypto_id, montant) VALUES (:sender, :receiver, :crypto_id, :amount)");
         $this->conn->bind(':sender', 1);
         $this->conn->bind(':reciever',$data['nexusid'] );
         $this->conn->bind(':crypto_id', $data['cryptoid']);
