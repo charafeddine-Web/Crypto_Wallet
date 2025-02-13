@@ -5,17 +5,21 @@ class TransactionController extends Controller {
     private $transaction;
     private $user;
     private $wallet;
+    private $apimodel;
+
     public function __construct() {
         $this->cryptoModel = $this->model('Crypto');
          $this->transaction =$this->model('transact');
          $this->user=$this->model('user');
          $this->wallet=$this->model('wallet');
+         $this->apimodel = $this->model('APImodel');
     }
     public function Buy_sell_page()
     {
-        $data = $this->cryptoModel->fetchCryptoData();
+        $data = $this->apimodel->getdatafromapi(100);
+        // var_dump($data);
       
-        $this->view('transactions',$data);
+        $this->view('send',$data);
         
     }
     /**************buy transac************* */
@@ -54,8 +58,13 @@ class TransactionController extends Controller {
      }
     public function send_transac(){
         
-        $coin=$this->wallet->check_Qte($_POST['cryptoid']);
-        $quantite=$coin->qte;
+        $coin = $this->wallet->check_Qte_Sell($_POST['cryptoid'], $_POST['coin_amount']);
+        if ($coin->soldusdt < $_POST['coin_amount']) {
+            echo "Vous n'avez pas assez de fonds pour envoyer cette transaction.";
+            return;
+        }
+
+        $quantite = $coin->soldusdt;
       
         if(!is_numeric($_POST['email'])){
          $receiver=$this->user->check_email_or_nexusID($_POST['email']);
