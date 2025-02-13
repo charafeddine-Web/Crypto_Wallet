@@ -19,6 +19,10 @@ class PagesController extends Controller
         $this->view('Dashboard');
     }
 
+    public function Market(){
+        $this->view('Market');
+    }
+
 
     public function Watchlist(){
         $crypto = $this->watchlistModel->getWatchlist();
