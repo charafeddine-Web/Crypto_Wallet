@@ -60,7 +60,7 @@
                     <div class="relative">
                         <select name="coin" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
 
-                            <?php foreach ($data['cryptos'] as $crypto) : ?>
+                            <?php foreach ($data['data'] as $crypto) : ?>
                                 
                                 <option value="<?= $crypto['quote']['USD']['price'] . '/' . $crypto['name'] . '/' . $crypto['id']; ?>"><?= $crypto['name'] . '(' . $crypto['symbol'] . ')'; ?> </option>
 
@@ -110,7 +110,7 @@
         <form action="<?php echo URLROOT; ?>/TransactionController/sell_transac" method="post" class="  mx-auto shadow-lg shadow-indigo-500/50 rounded px-8 pt-6 pb-8 mb-4">
             <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2">Coin amount</h1>
             <div class="w-[35vw] mx-auto flex items-center  ">
-                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="coin_amount" type="" name="coin_amount" placeholder="00.00">
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="coin_amount" type="" placeholder="00.00">
             </div>
             <div class=" md:w-2/3 px-3 mx-auto mb-6 md:mb-0 flex items-center justify-around">
 
@@ -122,7 +122,7 @@
                         <div class="relative">
                             <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="coins">
 
-                                <?php foreach ($data as $crypto) : ?>
+                                <?php foreach ($data['data'] as $crypto) : ?>
 
                                     <option value="<?= $crypto['quote']['USD']['price'] . '/' . $crypto['name'] . '/' . $crypto['id']; ?>"><?= $crypto['name'] . '(' . $crypto['symbol'] . ')'; ?> </option>
 
@@ -144,7 +144,7 @@
                         choose your coin
                     </label>
                     <div class="relative h-full">
-                        <input class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="amout_dollar" readonly>
+                        <input name="coin_amount"  class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="amout_dollar" readonly>
                         </input>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -188,7 +188,7 @@
                         <div class="relative">
                             <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="coins_send">
 
-                                <?php foreach ($data as $crypto) : ?>
+                                <?php foreach ($data['data'] as $crypto) : ?>
 
                                     <option value="<?= $crypto['quote']['USD']['price'] . '/' . $crypto['name'] . '/' . $crypto['id']; ?>"><?= $crypto['name'] . '(' . $crypto['symbol'] . ')'; ?> </option>
 
