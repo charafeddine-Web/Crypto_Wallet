@@ -7,6 +7,8 @@ const DB_PASS = 'Charaf2025';
 const DB_NAME = 'crypto_wallet';
 
 
+
+
 // App Root
 define('APPROOT',dirname(dirname(__FILE__)));
 // Url Root
