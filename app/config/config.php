@@ -1,11 +1,10 @@
 <?php
 session_start();
-// DB PARAMS
-const DB_HOST = 'localhost';
-const DB_USER = 'postgres';
-const DB_PASS = '123456';
-const DB_NAME = 'crypto_walet';
 
+define('DB_HOST','localhost');
+define('DB_USER','postgres');
+define('DB_PASS','barca1230/');
+define('DB_NAME','QueenCrypto');
 
 
 

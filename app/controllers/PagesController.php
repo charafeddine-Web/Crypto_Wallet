@@ -46,4 +46,5 @@ class PagesController extends Controller
     public function market(){
         $this->view('market');
     }
+
 }
