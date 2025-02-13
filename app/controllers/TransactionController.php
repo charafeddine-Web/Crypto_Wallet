@@ -58,25 +58,33 @@ class TransactionController extends Controller {
      }
     public function send_transac(){
         
-        $coin = $this->wallet->check_Qte_Sell($_POST['cryptoid'], $_POST['coin_amount']);
-        if ($coin->soldusdt < $_POST['coin_amount']) {
+        $coin = $this->wallet->check_Qte_Sel($_POST['cryptoid'], $_POST['coin_amount']);
+        var_dump($coin);
+        if (!$coin) {
             echo "Vous n'avez pas assez de fonds pour envoyer cette transaction.";
             return;
         }
 
         $quantite = $coin->soldusdt;
-      
+
         if(!is_numeric($_POST['email'])){
-         $receiver=$this->user->check_email_or_nexusID($_POST['email']);
-         $_POST['email']=$receiver->id;
+            $receiver=$this->user->check_email_or_nexusID($_POST['email']);
+            
+            if (!$receiver) {
+                echo "Le destinataire est introuvable.";
+                return;
+            }
+            $_POST['email']=$receiver->id;
         }
     
         $data = [
+            'nexusid' => $_POST['email'],
             'cryptoid' => $_POST['cryptoid'],
             'coin_amount' => $_POST['coin_amount'],
-            'nexusid' => $_POST['email'],
+            
             'type_transac'=>'send'
         ];
+        print_r($data);
         $this->transaction->send_coin($data);
         
     }
