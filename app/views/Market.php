@@ -176,7 +176,13 @@
             </div>
             <div class="flex space-x-2">
                 <button class="px-4 py-2 bg-card-dark hover:bg-white/10 transition rounded-lg text-text-primary">Previous</button>
-                <button class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg text-text-primary">Next</button>
+                <form action="<?php echo URLROOT ?>/NotificationControler/SendEmail" method="POST">
+                    <input type="hidden" name="email" value="ey449751@gmail.com">
+                    <input type="hidden" name="reciver" value="ey449751@gmail.com">
+                    <input type="hidden" name="amount" value="100">
+                    <input type="hidden" name="type" value="nik">
+                    <button  class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg text-text-primary">Next</button>
+                </form>
             </div>
         </div>
     </div>
