@@ -7,11 +7,13 @@ class User {
         $this->conn = new Database;
     }
     public function check_email_or_nexusID($data){
+        // var_dump($data);
+        // return $data;
         if (is_numeric($data)) {
             
-            $this->conn->query("SELECT id FROM users WHERE id= :input ");
+            $this->conn->query("SELECT nexusid FROM users WHERE nexusid= :input");
         } else {
-            $this->conn->query("SELECT id FROM users WHERE email= :input ");
+            $this->conn->query("SELECT nexusid FROM users WHERE email= :input");
         }
     
         
