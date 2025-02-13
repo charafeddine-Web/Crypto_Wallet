@@ -1,9 +1,11 @@
 <?php
-// DB PARAMS
+session_start();
+
 define('DB_HOST','localhost');
 define('DB_USER','postgres');
 define('DB_PASS','barca1230/');
 define('DB_NAME','QueenCrypto');
+
 
 
 // App Root
