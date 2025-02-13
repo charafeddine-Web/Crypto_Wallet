@@ -9,7 +9,4 @@ class PagesController extends Controller
         echo "Welcome to queenCrypto";
     }
 
-    public function test(){
-        $this->view('test');
-    }
 }
