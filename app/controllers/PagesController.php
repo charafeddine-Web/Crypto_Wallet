@@ -43,8 +43,5 @@ class PagesController extends Controller
         $this->view('crypto_wallet', $data);
     }
 
-    public function market(){
-        $this->view('market');
-    }
 
 }
