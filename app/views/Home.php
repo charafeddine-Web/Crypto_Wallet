@@ -55,17 +55,22 @@
                         Nexus
                     </h1>
                     <div class="hidden md:flex space-x-6">
-                        <a href="<?php echo URLROOT ?>/" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Home</a>
+                        <a href="<?php echo URLROOT ?>/" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Home</a>
                         <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
-                        <a href="<?php echo URLROOT ?>/PagesController/send" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Transfer</a>
-                        <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Trade</a>
-                        <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
+                        <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
+                        <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Sign In</button>
-                    <button class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Get Started</button>
-                </div>
+                <?php if(!isset($_SESSION['user_id'])): ?>
+                    <div class="flex items-center space-x-4">
+                        <a href="<?php echo URLROOT ?>/AuthController/login" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log in</a>
+                        <a href="<?php echo URLROOT ?>/AuthController/register" class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Sign Up</a>
+                    </div>
+                <?php else: ?>
+                    <div class="flex items-center space-x-4">
+                        <a href="<?php echo URLROOT ?>/AuthController/logout" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log out</a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

@@ -9,7 +9,7 @@ class Wallet {
 
     public function check_Qte_Sell($crypto_id,$amount){
         $this->conn->query("SELECT soldusdt from portefeuille where user_id = :user_id and crypto_id = :crypto_id and soldusdt - :amount >= 0");
-        $this->conn->bind(':user_id',1);
+        $this->conn->bind(':user_id',$_SESSION['user_id']);
         $this->conn->bind(':crypto_id', $crypto_id);
         $this->conn->bind(':amount', $amount);
         if($this->conn->execute() && $this->conn->rowCount() > 0){
@@ -24,7 +24,7 @@ class Wallet {
 {
     $this->conn->query("SELECT soldusdt FROM portefeuille WHERE user_id = :user_id AND crypto_id = :crypto_id");
 
-    $this->conn->bind(':user_id', 1);
+    $this->conn->bind(':user_id', $_SESSION['user_id']);
     $this->conn->bind(':crypto_id', $crypto_id);
     
     $result = $this->conn->single(); 
@@ -42,7 +42,7 @@ class Wallet {
         if($row){
 
             $this->conn->query("UPDATE  portefeuille set soldusdt = soldusdt - :qte where user_id =:user_id AND crypto_id=:crypto_id ");
-            $this->conn->bind(':user_id', 1);
+            $this->conn->bind(':user_id', $_SESSION['user_id']);
             $this->conn->bind(':crypto_id', $data['cryptoid']);
             $this->conn->bind(':qte', $data['cryptoamount']);
             $this->conn->execute();

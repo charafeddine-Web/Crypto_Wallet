@@ -4,24 +4,25 @@ class PagesController extends Controller
 
     private $cryptoModel;
     private $apimodel;
+    private $watchlistModel;
 
     public function __construct()
     {
         $this->cryptoModel = $this->model('Crypto');
         $this->apimodel = $this->model('APImodel');
+        $this->watchlistModel = $this->model('WatchList');
     }
     public function index(){
         $fromAPI = $this->apimodel->getdatafromapi(3);
         $data = ['data' => $fromAPI['data']];
         $this->view('Home', $data);
     }
-    
+
     public function send(){
         $fromAPI = $this->apimodel->getdatafromapi(10);
         $data = ['data' => $fromAPI['data']];
         $this->view('send', $data);
     }
-
 
     public function my_wallet(){
         $sold = $this->cryptoModel->getsoldeUSDT();
@@ -33,8 +34,12 @@ class PagesController extends Controller
         $this->view('Dashboard');
     }
 
-    public function watch_list(){
-        $this->view('Watchlist');
+    public function Watchlist(){
+        $crypto = $this->watchlistModel->getWatchlist();
+        $data = [
+            'crypto' => $crypto
+        ];
+        $this->view('Watchlist', $data);
     }
 
     public function market()
