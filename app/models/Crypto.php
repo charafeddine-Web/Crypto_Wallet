@@ -39,7 +39,8 @@ Class Crypto {
         }
     }
 
-    public function updateCrypto($user_id, $crypto_name, $amount) {
+    public function updateCrypto($user_id, $crypto_name, $amount)
+    {
         try {
 
             $this->db->query("SELECT cw.*, c.nom AS crypto_name
@@ -68,12 +69,13 @@ Class Crypto {
                 $this->db->bind(':crypto_name', $crypto_name);
                 $this->db->bind(':amount', $amount);
                 $this->db->execute();
-                header("location:".URLROOT."/test");
+                header("location:" . URLROOT . "/test");
             }
             return true;
         } catch (Exception $e) {
             throw new Exception("Error updating crypto wallet: " . $e->getMessage());
         }
+    }
 
     // for deposit USDT in user account
     public function depositUSDT($data){
@@ -94,5 +96,14 @@ Class Crypto {
         $this->db->execute();
        $result = $this->db->single();
        return $result->soldusdt;
+    }
+    public function getCurrencieAmount(){
+        $this->db->query('
+        SELECT cryptoWallet.amount , cryptomonnaie.nom FROM cryptowallet 
+        join cryptomonnaie on cryptomonnaie.id_cryptomonnaie = cryptowallet.id_cryptomonnaie 
+        where cryptowallet.user_id  = :user_id ');
+        // SWITCH 1 WITH $_SESSION['user_id']
+        $this->db->bind(':user_id',1);
+        return $this->db->resultSet();
     }
 }
