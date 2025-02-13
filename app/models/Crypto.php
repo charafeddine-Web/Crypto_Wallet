@@ -42,17 +42,27 @@ Class Crypto {
     public function updateCrypto($user_id, $crypto_name, $amount) {
         try {
 
-            $this->db->query("SELECT * FROM cryptowallet WHERE user_id = 1 AND nom = :crypto_name");
+            $this->db->query("SELECT cw.*, c.nom AS crypto_name
+                                    FROM CryptoWallet cw
+                                    JOIN cryptomonnaie c ON cw.id_cryptomonnaie = c.id_cryptomonnaie
+                                    WHERE cw.user_id = 1 AND c.nom = :crypto_name");
+
             $this->db->bind(':crypto_name', 'btc');
             $crypto = $this->db->single();
 
             if ($this->db->rowCount() > 0) {
-                $new_amount = $crypto->amount + $amount; // Add the new amount to the existing amount
-                $this->db->query("UPDATE cryptowallet SET total_supply = :new_amount WHERE user_id = 1 AND nom = :crypto_name");
+                $new_amount = $crypto->amount + $amount;
+                $this->db->query("UPDATE CryptoWallet cw
+                                        SET amount = :new_amount
+                                        FROM Cryptomonnaie c
+                                        WHERE cw.user_id = 1
+                                        AND c.nom = :crypto_name
+                                        AND cw.id_cryptomonnaie = c.id_cryptomonnaie;
+                ");
                 $this->db->bind(':new_amount', $new_amount);
                 $this->db->bind(':crypto_name', $crypto_name);
                 $this->db->execute();
-                header("location:".URLROOT."/test");
+
             } else {
                 $this->db->query("INSERT INTO cryptowallet (user_id, crypto_name, amount) VALUES (1, :crypto_name, :amount)");
                 $this->db->bind(':crypto_name', $crypto_name);
