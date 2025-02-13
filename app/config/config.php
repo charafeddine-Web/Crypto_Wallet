@@ -1,10 +1,10 @@
 <?php
 session_start();
-// DB PARAMS
-const DB_HOST = 'localhost';
-const DB_USER = 'postgres';
-const DB_PASS = 'Wissam0908';
-const DB_NAME = 'QueenCrypto';
+
+define('DB_HOST','localhost');
+define('DB_USER','postgres');
+define('DB_PASS','barca1230/');
+define('DB_NAME','QueenCrypto');
 
 
 
