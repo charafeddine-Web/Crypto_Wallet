@@ -6,7 +6,7 @@
 */
 
 class Core{
-    protected  $currentController = 'ApiController';
+    protected  $currentController = 'PagesController';
     protected $currentMethod = 'index';
     protected  $params = [];
 
