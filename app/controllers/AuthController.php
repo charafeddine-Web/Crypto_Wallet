@@ -76,26 +76,6 @@ class AuthController extends Controller
                 exit();
             }
 
-//            if ($this->User->register($data)) {
-//                $_SESSION['email'] = $email;
-//                $_SESSION['firstname'] = $firstname;
-//                $_SESSION['lastname'] = $lastname;
-//
-//                $_SESSION['verification_code'] = $verification_code;
-//                $_SESSION['verification_code_expire'] = time() + 600;
-//                if ($this->sendVerificationEmail($email, $verification_code)) {
-//                    $_SESSION['session_success'] = ["Account created successfully. Please check your email to verify your account."];
-//                    header('Location: /Crypto_Wallet/AuthController/verify');
-//                } else {
-//                    $_SESSION['session_error'] = ["Account created, but we couldn't send the verification email. Please contact support."];
-//                    header('Location: /Crypto_Wallet/AuthController/register');
-//                }
-//                exit();
-//            } else {
-//                $_SESSION['session_error'] = ["Something went wrong. Please try again."];
-//                header('Location: /Crypto_Wallet/AuthController/register');
-//                exit();
-//            }
         }
         $this->view('register');
     }
@@ -174,7 +154,6 @@ class AuthController extends Controller
     public function login()
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
-            session_start();
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
@@ -215,6 +194,13 @@ class AuthController extends Controller
         }
 
         $this->view('login');
+    }
+
+    public function logout(){
+        session_start();
+        session_destroy();
+        header('Location: /Crypto_Wallet/AuthController/login');
+        exit();
     }
 
 

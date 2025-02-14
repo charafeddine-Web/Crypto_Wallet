@@ -76,13 +76,12 @@ Class Crypto {
             throw new Exception("Error updating crypto wallet: " . $e->getMessage());
         }
     }
-
     // for deposit USDT in user account
     public function depositUSDT($data){
         try {
             $this->db->query('UPDATE portefeuille SET soldusdt = soldusdt + :soldeUSDT WHERE user_id = :user_id');
-            $this->db->bind(':user_id', $_SESSION['user_id']);
             $this->db->bind(':soldeUSDT', $data['soldeUSDT']);
+            $this->db->bind(':user_id', $_SESSION['user_id']);
             $this->db->execute();
         }
         catch(PDOException $e){

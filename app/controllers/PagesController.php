@@ -19,6 +19,9 @@ class PagesController extends Controller
         $this->view('Dashboard');
     }
 
+    public function Market(){
+        $this->view('Market');
+    }
 
     public function Watchlist(){
         $crypto = $this->watchlistModel->getWatchlist();
@@ -39,8 +42,5 @@ class PagesController extends Controller
         $this->view('crypto_wallet', $data);
     }
 
-    public function market(){
-        $this->view('market');
-    }
 
 }
