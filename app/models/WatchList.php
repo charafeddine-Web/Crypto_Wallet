@@ -1,12 +1,15 @@
 <?php
-class Watchlist {
+class Watchlist
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new Database();
     }
 
-    public function getWatchlist() {
+    public function getWatchlist()
+    {
         $query = "SELECT 
                     c.id_cryptomonnaie,
                     w.creation_date, 
@@ -33,14 +36,16 @@ class Watchlist {
         return $this->db->resultSet();
     }
 
-    public function removeCrypto($userId, $cryptoId) {
+    public function removeCrypto($userId, $cryptoId)
+    {
         $this->db->query("DELETE FROM watchlist WHERE user_id = :user_id AND id_cryptomonnaie = :crypto_id");
         $this->db->bind(':user_id', $userId);
         $this->db->bind(':crypto_id', $cryptoId);
         return $this->db->execute();
     }
 
-    public function AddCrypto($name, $symbol, $slug, $max_supply, $prix, $marketcap, $volume24h, $circulatingsupply, $total_supply) {
+    public function AddCrypto($name, $symbol, $slug, $max_supply, $prix, $marketcap, $volume24h, $circulatingsupply, $total_supply)
+    {
         $this->db->query("INSERT INTO cryptomonnaie (nom, symbole, slug, max_supply, prix, marketCap, volume24h, circulatingSupply, total_Supply) VALUES (:name, :symbol, :slug, :max_supply, :prix, :marketcap, :volume24h, :circulatingsupply, :total_supply)");
         $this->db->bind(':name', $name);
         $this->db->bind(':symbol', $symbol);
@@ -54,13 +59,13 @@ class Watchlist {
         $this->db->execute();
         $lastId = $this->db->lastInsertId();
         $this->db->query("INSERT INTO  watchlist(user_id ,id_cryptomonnaie) VALUES (:user_id, :crypto_id)");
-        $this->db->bind(':user_id',$_SESSION['user_id']);
+        $this->db->bind(':user_id', $_SESSION['user_id']);
         $this->db->bind(':crypto_id', $lastId);
-        if($this->db->execute()){
+        if ($this->db->execute()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-
 }
+
