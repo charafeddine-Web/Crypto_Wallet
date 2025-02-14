@@ -235,6 +235,7 @@
         labels: <?php echo json_encode($data['labels']); ?>,
         amounts: <?php echo json_encode($data['amounts']); ?>
     };
+    console.log(chartData)
 
     const ctx = document.getElementById('walletChart').getContext('2d');
     new Chart(ctx, {

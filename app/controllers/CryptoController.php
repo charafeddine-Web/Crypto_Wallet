@@ -38,18 +38,5 @@ Class CryptoController extends Controller {
             exit();
         }
     }
-    public function showWalletAnalyss(){
-       $data = $this->currentModel->getCurrencieAmount();
-       //prepare data for the chart
-        $chartData = [
-            'labels' => [],
-            'amounts'=> []
-        ];
-        // FOREACH ROW OF DATA PUSH THE NOM TO $chartData['labels'] AND amount to chartdata['amounts']
-        foreach ($data as $row){
-            $chartData['labels'][] = $row->nom;//currency names
-            $chartData['amounts'][] = $row->amount;//Amount;
-        }
-       $this->view('crypto_wallet',$chartData);
-    }
+
 }

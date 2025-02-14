@@ -114,7 +114,6 @@ class AuthController extends Controller
 
     public function verify()
     {
-        session_start();
 
         if (!isset($_SESSION['email']) || !isset($_SESSION['verification_code'])) {
             $_SESSION['session_error'] = ["You need to register first."];
