@@ -42,7 +42,7 @@
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center space-x-8">
-                <h1 class="text-2xl font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-white">
                     Nexus
                 </h1>
                 <div class="hidden md:flex space-x-6">
@@ -65,6 +65,25 @@
         </div>
     </div>
 </nav>
+
+<?php if(isset($_SESSION['success'])): ?>
+    <div id="topModal" class="fixed top-0 left-0 w-full bg-green-400 shadow-md p-4 flex items-center justify-between z-50">
+        <span class="text-lg font-semibold text-white-800"><?php echo $_SESSION['success'] ?></span>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-800">&times;</button>
+    </div>
+    <?php unset($_SESSION['success']) ?>
+<?php endif; ?>
+
+
+<?php if(isset($_SESSION['error'])): ?>
+    <div id="topModal" class="fixed top-0 left-0 w-full bg-red-400 shadow-md p-4 flex items-center justify-between z-50">
+        <span class="text-lg font-semibold text-white-800"><?php echo $_SESSION['error'] ?></span>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-800">&times;</button>
+    </div>
+    <?php unset($_SESSION['error']) ?>
+<?php endif; ?>
+
+
 <article>
     <h1 class="text-center text-3xl">Choose your transaction</h1>
     <div class=" flex items-center justify-around w-[50vw] mx-auto w-52">
@@ -212,7 +231,7 @@
             <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2"> ENTER COIN AMOUNT</h1>
 
             <div class="w-[35vw] mx-auto flex items-center  ">
-                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="coin_amount2" type="" name="coin_amount" placeholder="00.00">
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="coin_amount2" type=""  placeholder="00.00">
             </div>
             <div class=" md:w-2/3 px-3 mx-auto mb-6 md:mb-0 flex items-center justify-around">
 
@@ -245,8 +264,9 @@
                     <label class="block uppercase tracking-wide text-white text-lg font-bold mb-2" for="grid-state">
                         choose your coin
                     </label>
+
                     <div class="relative h-full">
-                        <input class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="amout_dollar_send" readonly>
+                        <input class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="amout_dollar_send" name="coin_amount" readonly>
                         </input>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -465,7 +485,24 @@ $("#coin_amount2").on('input', function() {
         });
     });
     /****************************************** */
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Modal toggle function
+        function toggleModal(modalname) {
+        const modal = document.getElementById(modalname);
+        modal.classList.toggle('hidden');
+    }
+
+        function openModal() {
+        document.getElementById("topModal").style.display = "flex";
+    }
+        function closeModal() {
+        document.getElementById("topModal").style.display = "none";
+    }
 </script>
+
 
 </body>
 
