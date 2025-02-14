@@ -39,11 +39,36 @@ class Watchlist {
         $this->db->bind(':crypto_id', $cryptoId);
         return $this->db->execute();
     }
+
+    public function AddCrypto($name, $symbol, $slug, $max_supply, $prix, $marketcap, $volume24h, $circulatingsupply, $total_supply) {
+        try{
+        $this->db->query("INSERT INTO cryptomonnaie (nom, symbole, slug, max_supply, prix, marketCap, volume24h, circulatingSupply, total_Supply) VALUES (:name, :symbol, :slug, :max_supply, :prix, :marketcap, :volume24h, :circulatingsupply, :total_supply)");
+        $this->db->bind(':name', $name);
+        $this->db->bind(':symbol', $symbol);
+        $this->db->bind(':slug', $slug);
+        $this->db->bind(':max_supply', $max_supply);
+        $this->db->bind(':prix', $prix);
+        $this->db->bind(':marketcap', $marketcap);
+        $this->db->bind(':volume24h', $volume24h);
+        $this->db->bind(':circulatingsupply', $circulatingsupply);
+        $this->db->bind(':total_supply', $total_supply);
+        $this->db->execute();
+
+        $lastId = $this->db->lastInsertId();
+
+
     public function addToWatchList($userId, $cryptoId) {
         $this->db->query("INSERT INTO watchlist (user_id, id_cryptomonnaie) VALUES (:user_id, :crypto_id)");
-        $this->db->bind(':user_id', $userId);
-        $this->db->bind(':crypto_id', $cryptoId);
-        return $this->db->execute();
+        $this->db->bind(':user_id', $_SESSION['user_id']);
+        $this->db->bind(':crypto_id', $lastId);
+        $this->db->execute();
+        return true;
+        }
+        catch(PDOException $e){
+            error_log("Error adding crypto: " . $e->getMessage());
+            return false;
+        }
+
     }
 }
 
