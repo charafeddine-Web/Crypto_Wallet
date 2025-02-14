@@ -100,49 +100,49 @@
                         <input type="hidden" name="cryptoId" value="1">
                         <input type="hidden" name="idUser" value="1">
                         <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                            <td class="p-4 text-text-primary">1</td>
-                            <td class="p-4">
-                                <div class="flex items-center space-x-3">
-                                    <i class="fab fa-bitcoin text-warning"></i>
-                                    <span class="font-medium text-text-primary">Bitcoin</span>
-                                    <span class="text-text-secondary">BTC</span>
-                                </div>
-                            </td>
-                            <td class="text-right p-4 text-text-primary">$65,432.10</td>
-                            <td class="text-right p-4 text-success">+2.5%</td>
-                            <td class="text-right p-4 text-text-primary">$1.28T</td>
-                            <td class="text-right p-4 text-text-primary">$28.5B</td>
-                            <td class="text-center p-4">
-                                <button class="text-text-secondary hover:text-warning transition">
-                                    <i class="far fa-star"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <td class="p-4 text-text-primary">1</td>
+                        <td class="p-4">
+                            <div class="flex items-center space-x-3">
+                                <i class="fab fa-bitcoin text-warning"></i>
+                                <span class="font-medium text-text-primary">Bitcoin</span>
+                                <span class="text-text-secondary">BTC</span>
+                            </div>
+                        </td>
+                        <td class="text-right p-4 text-text-primary">$65,432.10</td>
+                        <td class="text-right p-4 text-success">+2.5%</td>
+                        <td class="text-right p-4 text-text-primary">$1.28T</td>
+                        <td class="text-right p-4 text-text-primary">$28.5B</td>
+                        <td class="text-center p-4">
+                            <button class="text-text-secondary hover:text-warning transition">
+                                <i class="far fa-star"></i>
+                            </button>
+                        </td>
+                    </tr>
                     </form>
                     <form action="<?php echo URLROOT ?>/WatchListController/addToWatchList" method="POST">
                         <input type="hidden" name="cryptoId" value="1">
                         <input type="hidden" name="idUser" value="2">
-                        <!-- Ethereum -->
-                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                            <td class="p-4 text-text-primary">2</td>
-                            <td class="p-4">
-                                <div class="flex items-center space-x-3">
-                                    <i class="fab fa-ethereum text-accent-primary"></i>
-                                    <span class="font-medium text-text-primary">Ethereum</span>
-                                    <span class="text-text-secondary">ETH</span>
-                                </div>
-                            </td>
-                            <td class="text-right p-4 text-text-primary">$3,521.80</td>
-                            <td class="text-right p-4 text-success">+3.2%</td>
-                            <td class="text-right p-4 text-text-primary">$421.6B</td>
-                            <td class="text-right p-4 text-text-primary">$15.2B</td>
-                            <td class="text-center p-4">
-                                <button class="text-text-secondary hover:text-warning transition">
-                                    <i class="far fa-star"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </form>
+                    <!-- Ethereum -->
+                    <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                        <td class="p-4 text-text-primary">2</td>
+                        <td class="p-4">
+                            <div class="flex items-center space-x-3">
+                                <i class="fab fa-ethereum text-accent-primary"></i>
+                                <span class="font-medium text-text-primary">Ethereum</span>
+                                <span class="text-text-secondary">ETH</span>
+                            </div>
+                        </td>
+                        <td class="text-right p-4 text-text-primary">$3,521.80</td>
+                        <td class="text-right p-4 text-success">+3.2%</td>
+                        <td class="text-right p-4 text-text-primary">$421.6B</td>
+                        <td class="text-right p-4 text-text-primary">$15.2B</td>
+                        <td class="text-center p-4">
+                            <button class="text-text-secondary hover:text-warning transition">
+                                <i class="far fa-star"></i>
+                            </button>
+                        </td>
+                    </tr>
+                        </form>
                     <!-- Binance Coin -->
                     <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
                         <td class="p-4 text-text-primary">3</td>
@@ -176,7 +176,13 @@
             </div>
             <div class="flex space-x-2">
                 <button class="px-4 py-2 bg-card-dark hover:bg-white/10 transition rounded-lg text-text-primary">Previous</button>
-                <button class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg text-text-primary">Next</button>
+                <form action="<?php echo URLROOT ?>/NotificationControler/SendEmail" method="POST">
+                    <input type="hidden" name="email" value="ey449751@gmail.com">
+                    <input type="hidden" name="reciver" value="ey449751@gmail.com">
+                    <input type="hidden" name="amount" value="100">
+                    <input type="hidden" name="type" value="nik">
+                    <button  class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg text-text-primary">Next</button>
+                </form>
             </div>
         </div>
     </div>
