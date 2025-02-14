@@ -189,7 +189,7 @@ class AuthController extends Controller
             $_SESSION['user_email'] = $user->email;
             $_SESSION['session_success'] = ["Login successful!"];
 
-            header('Location: /Crypto_Wallet/PagesController/index');
+            header('Location: /Crypto_Wallet/');
             exit();
         }
 

@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Crypto - Markets</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/market.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/watchlist.css">
+    <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/favicon.svg" type="image/svg+xml">
+    <link href="https://unpkg.com/tailwindcss@0.3.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -87,83 +96,41 @@
                     <tr class="text-text-secondary border-b border-white/5">
                         <th class="text-left p-4">Rank</th>
                         <th class="text-left p-4">Name</th>
-                        <th class="text-right p-4">Price</th>
-                        <th class="text-right p-4">24h Change</th>
-                        <th class="text-right p-4">Market Cap</th>
-                        <th class="text-right p-4">Volume (24h)</th>
-                        <th class="text-center p-4">Watchlist</th>
+                        <th class="text-left p-4">Price</th>
+                        <th class="text-left p-4">24h Change</th>
+                        <th class="text-left p-4">Market Cap</th>
+                        <th class="text-left p-4">Volume (24h)</th>
+                        <th class="text-left p-4">Circulating Supply</th>
+                        <th class="text-left p-4">Watchlist</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- Bitcoin -->
-                    <form action="<?php echo URLROOT ?>/WatchListController/addToWatchList" method="POST">
-                        <input type="hidden" name="cryptoId" value="1">
-                        <input type="hidden" name="idUser" value="1">
-                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">1</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fab fa-bitcoin text-warning"></i>
-                                <span class="font-medium text-text-primary">Bitcoin</span>
-                                <span class="text-text-secondary">BTC</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$65,432.10</td>
-                        <td class="text-right p-4 text-success">+2.5%</td>
-                        <td class="text-right p-4 text-text-primary">$1.28T</td>
-                        <td class="text-right p-4 text-text-primary">$28.5B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    </form>
-                    <form action="<?php echo URLROOT ?>/WatchListController/addToWatchList" method="POST">
-                        <input type="hidden" name="cryptoId" value="1">
-                        <input type="hidden" name="idUser" value="2">
-                    <!-- Ethereum -->
-                    <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">2</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fab fa-ethereum text-accent-primary"></i>
-                                <span class="font-medium text-text-primary">Ethereum</span>
-                                <span class="text-text-secondary">ETH</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$3,521.80</td>
-                        <td class="text-right p-4 text-success">+3.2%</td>
-                        <td class="text-right p-4 text-text-primary">$421.6B</td>
-                        <td class="text-right p-4 text-text-primary">$15.2B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
-                        </form>
-                    <!-- Binance Coin -->
-                    <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">3</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fas fa-coins text-warning"></i>
-                                <span class="font-medium text-text-primary">Binance Coin</span>
-                                <span class="text-text-secondary">BNB</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$456.75</td>
-                        <td class="text-right p-4 text-danger">-1.2%</td>
-                        <td class="text-right p-4 text-text-primary">$75.8B</td>
-                        <td class="text-right p-4 text-text-primary">$5.4B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Add more rows for other cryptocurrencies -->
+                        <?php foreach ($data['cryptos'] as $crypto) : ?>
+                            <tr>
+
+                            <td class="text-left p-4"><?= htmlspecialchars($crypto['cmc_rank']); ?></td>
+                                <td class="text-left p-4"><?= htmlspecialchars($crypto['name']); ?> (<?= htmlspecialchars($crypto['symbol']); ?>)</td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['price'], 2); ?></td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?></td>
+                                <td class="text-left p-4 font-bold"
+                                    style="color: <?= $crypto['quote']['USD']['percent_change_24h'] >= 0 ? 'green' : 'red'; ?>;">
+                                    <?= number_format($crypto['quote']['USD']['percent_change_24h'], 2); ?>%
+                                </td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?></td>
+                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['volume_24h'], 0, '.', ','); ?></td>
+                                <td class="text-center p-4">
+                                    <form action="<?php echo URLROOT ?>/WatchListController/addToWatchList" method="POST">
+                                        <input type="hidden" name="user_id" value="<?= $_SESSION['user_id']?>">
+                                        <input type="hidden" name="crypto_id" value="<?= $crypto['id_cryptologies']?>">
+
+                                        <button type="submit" class="cursor-pointer">
+                                            <i class="fas fa-star mr-2 hover:text-yellow-500"></i>
+                                        </button>
+                                    </form>
+                                </td>
+<!--                                <td class="text-center p-4 cursor-pointer"><i class="fas fa-star mr-2  hover:text-yellow-500"></i></td>-->
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

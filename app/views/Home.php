@@ -46,7 +46,6 @@
 <div class="relative overflow-hidden">
     <!-- Background Gradient -->
     <div class="absolute inset-0 bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20"></div>
-
     <!-- Navigation -->
     <nav class="relative z-10 border-b border-white/10 bg-ultra-dark/80 backdrop-blur-xl">
         <div class="container mx-auto px-4">
@@ -110,7 +109,7 @@
                 </div>
             </div>
             <div class="relative">
-                <img src="d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
+                <img src="./public/img/d7de335c43f6a70379f4f193df3cc9f9.png" alt="Trading Platform" class="animate-float">
                 <!-- Floating Elements -->
                 <div class="absolute -top-6 -left-6 bg-card-dark p-4 rounded-lg border border-white/10 shadow-xl animate-fade-in">
                     <div class="flex items-center space-x-3">
@@ -184,6 +183,18 @@
         </div>
     </div>
 </div>
+<?php
+function formatNumber($number) {
+    if ($number >= 1000000000) {
+        return number_format($number / 1000000000, 1) . 'B';
+    } elseif ($number >= 1000000) {
+        return number_format($number / 1000000, 1) . 'M';
+    } else {
+        return number_format($number, 1);
+    }
+}
+?>
+
 
 <!-- Market Overview -->
 <div class="py-20 bg-card-dark/50">
@@ -213,9 +224,9 @@
                         </div>
                     </td>
                     <td class="text-right py-4">$<?php echo number_format($coin['quote']['USD']['price'], 2) ?></td>
-                    <td class="text-right py-4 text-success"><?php echo number_format($coin['quote']['USD']['percent_change_24h'], 2)?>%</td>
-                    <td class="text-right py-4">$<?php echo number_format($coin['quote']['USD']['market_cap'])?></td>
-                    <td class="text-right py-4"><?php echo number_format($coin['quote']['USD']['volume_24h'])?></td>
+                    <td class="text-right py-4 text-success"><?php echo number_format($coin['quote']['USD']['percent_change_24h'], 2) ?>%</td>
+                    <td class="text-right py-4">$<?php echo formatNumber($coin['quote']['USD']['market_cap']) ?></td>
+                    <td class="text-right py-4">$ <?php echo formatNumber($coin['total_supply']) ?></td>
                 </tr>
                 <?php endforeach; ?>
                 </tbody>

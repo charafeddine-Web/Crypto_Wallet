@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-define('DB_HOST','localhost');
-define('DB_USER','postgres');
-define('DB_PASS','Azzedine2004');
-define('DB_NAME','crypto_wallet');
-
+const DB_HOST = 'localhost';
+const DB_USER = 'postgres';
+const DB_PASS = 'Charaf2025';
+const DB_NAME = 'crypto_wallet';
 
 
 // App Root

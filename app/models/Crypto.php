@@ -97,6 +97,7 @@ Class Crypto {
        $result = $this->db->single();
        return $result->soldusdt;
     }
+
     public function getCurrencieAmount(){
         $this->db->query('
         SELECT cryptoWallet.amount , cryptomonnaie.nom FROM cryptowallet 

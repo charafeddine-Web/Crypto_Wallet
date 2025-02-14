@@ -1,19 +1,38 @@
 <?php
-class User
-{
+class User {
     private $db;
 
     public function __construct()
     {
-        $this->db = new Database();
+        $this->db = new Database;
     }
+    public function check_email_or_nexusID($data){
 
+        if (is_numeric($data)) {
+
+            $this->db->query("SELECT nexusid FROM users WHERE nexusid= :input");
+        } else {
+            $this->db->query("SELECT email FROM users WHERE email= :input");
+        }
+
+
+        $this->db->bind(':input',$data);
+
+        $this->db->execute();
+        return $this->db->single();
+
+    }
+//    public function check_email_or_nexusID($email) {
+//        $this->db->query("SELECT email FROM users WHERE email = :email");
+//        $this->db->bind(':email', $email);
+//        return $this->db->single();
+//    }
     public function register($data)
     {
         try {
             $query = "INSERT INTO users (nom, prenom, email, mot_de_pass, is_active, verification_code) 
                   VALUES (:firstname, :lastname, :email, :password, :is_active, :verification_code)";
-             $this->db->query($query);
+            $this->db->query($query);
             $this->db->bind(':firstname', $data['firstname']);
             $this->db->bind(':lastname', $data['lastname']);
             $this->db->bind(':email', $data['email']);
@@ -43,7 +62,7 @@ class User
 
     public function getUserByEmail($email)
     {
-       $this->db->query("SELECT * FROM users WHERE email = :email");
+        $this->db->query("SELECT * FROM users WHERE email = :email");
         $this->db->bind(':email', $email);
         $this->db->execute();
         return $this->db->single();
@@ -55,7 +74,4 @@ class User
         $this->db->bind(':user_id', $userId);
         return $this->db->execute();
     }
-
-
-
 }
