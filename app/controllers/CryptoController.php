@@ -47,4 +47,5 @@ Class CryptoController extends Controller {
 
         header('Location: ' . URLROOT . '/PagesController/send');
     }
+
 }

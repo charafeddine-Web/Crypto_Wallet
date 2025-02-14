@@ -92,11 +92,19 @@ Class Crypto {
 
     public function getsoldeUSDT(){
         $this->db->query('SELECT soldusdt FROM portefeuille WHERE user_id = :user_id');
-        $this->db->bind(':user_id', $_SESSION['user_id']);
+            $this->db->bind(':user_id', $_SESSION['user_id']);
         $this->db->execute();
        $result = $this->db->single();
        return $result->soldusdt;
     }
 
-    
+    public function getCurrencieAmount(){
+        $this->db->query('
+        SELECT cryptoWallet.amount , cryptomonnaie.nom FROM cryptowallet 
+        join cryptomonnaie on cryptomonnaie.id_cryptomonnaie = cryptowallet.id_cryptomonnaie 
+        where cryptowallet.user_id  = :user_id ');
+        // SWITCH 1000 WITH $_SESSION['user_id']
+        $this->db->bind(':user_id',$_SESSION['user_id']);
+        return $this->db->resultSet() ;
+    }
 }
