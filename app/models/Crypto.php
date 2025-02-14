@@ -65,9 +65,10 @@ Class Crypto {
                 $this->db->execute();
 
             } else {
-                $this->db->query("INSERT INTO cryptowallet (user_id, crypto_name, amount) VALUES (1, :crypto_name, :amount)");
+                $this->db->query("INSERT INTO cryptowallet (user_id, crypto_name, amount) VALUES (:user_id, :crypto_name, :amount)");
                 $this->db->bind(':crypto_name', $crypto_name);
                 $this->db->bind(':amount', $amount);
+                $this->db->bind(':user_id', $_SESSION['user_id']);
                 $this->db->execute();
                 header("location:" . URLROOT . "/test");
             }
@@ -92,7 +93,7 @@ Class Crypto {
 
     public function getsoldeUSDT(){
         $this->db->query('SELECT soldusdt FROM portefeuille WHERE user_id = :user_id');
-            $this->db->bind(':user_id', $_SESSION['user_id']);
+        $this->db->bind(':user_id', $_SESSION['user_id']);
         $this->db->execute();
        $result = $this->db->single();
        return $result->soldusdt;

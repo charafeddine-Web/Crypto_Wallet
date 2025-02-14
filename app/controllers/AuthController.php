@@ -153,7 +153,6 @@ class AuthController extends Controller
     public function login()
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
-            session_start();
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 

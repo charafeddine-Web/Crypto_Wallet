@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 const DB_HOST = 'localhost';
 const DB_USER = 'postgres';
 const DB_PASS = 'Charaf2025';
