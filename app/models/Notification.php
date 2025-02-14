@@ -83,10 +83,9 @@ class Notification {
                 echo $e->getMessage();
                 return "Error  " . $mail->ErrorInfo;
             }
-
         }else{
             return "Error";
         }
     }
 }
-?>
+
