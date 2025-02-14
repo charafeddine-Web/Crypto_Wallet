@@ -26,9 +26,9 @@ class Wallet {
 
     $this->conn->bind(':user_id', $_SESSION['user_id']);
     $this->conn->bind(':crypto_id', $crypto_id);
-    
-    $result = $this->conn->single(); 
-    
+
+    $result = $this->conn->single();
+
     if ($result && $result->soldusdt >= $amount) {
         return $result;
     }
@@ -38,13 +38,13 @@ class Wallet {
 
     
     public function wallet_sell($data){
-        $row=$this->check_Qte_Sell($data['cryptoid'],$data['cryptoamount']);
+        $row=$this->check_Qte_Sell($data['cryptoid'],$data['coin_amount']);
         if($row){
 
             $this->conn->query("UPDATE  portefeuille set soldusdt = soldusdt - :qte where user_id =:user_id AND crypto_id=:crypto_id ");
             $this->conn->bind(':user_id', $_SESSION['user_id']);
             $this->conn->bind(':crypto_id', $data['cryptoid']);
-            $this->conn->bind(':qte', $data['cryptoamount']);
+            $this->conn->bind(':qte', $data['coin_amount']);
             $this->conn->execute();
             return true;
         }else{
@@ -53,11 +53,18 @@ class Wallet {
 
     }
 
+    public function wallet_receiver($data){
+            $this->conn->query("UPDATE  portefeuille set soldusdt = soldusdt + :qte where user_id =:user_id");
+            $this->conn->bind(':user_id', $data['nexusid']);
+            $this->conn->bind(':qte', $data['coin_amount']);
+            $this->conn->execute();
+    }
+
 
 
     public function add_to_wallet($data){
         $this->conn->query("SELECT soldusdt, CASE WHEN soldusdt > 0 THEN true ELSE false END as result FROM portefeuille WHERE user_id=:user_id AND crypto_id=:crypto_id");
-        $this->conn->bind(':user_id',1);
+        $this->conn->bind(':user_id',$_SESSION['user_id']);
         $this->conn->bind(':crypto_id', $data['cryptoid']);
         $this->conn->execute();
         $row=$this->conn->single();
@@ -71,7 +78,7 @@ class Wallet {
             $this->conn->query("INSERT INTO portefeuille (user_id,crypto_id,soldusdt ) VALUES (:user_id,:crypto_id,:qte)"); 
         }
 
-        $this->conn->bind(':user_id', 1);
+        $this->conn->bind(':user_id', $_SESSION['user_id']);
         $this->conn->bind(':crypto_id', $data['cryptoid']);
         $this->conn->bind(':qte', $data['cryptoamount']);
         $this->conn->execute();
