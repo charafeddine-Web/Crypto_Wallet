@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="QueenCrypto@localhost" uuid="124d3f9b-4780-451f-bdda-dd406e485b6a">
-    <data-source source="LOCAL" name="QueenCrypto@localhost" uuid="c7fa33cd-a844-450d-b041-90c274bea778">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/QueenCrypto</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="crypto_walet@localhost" uuid="6dcac888-0d27-46cc-a251-5c29a7f65a5d">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/crypto_walet</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="crypto_wallet@localhost" uuid="f4957946-84fc-439e-9e19-b842e9ec3d42">
+    <data-source source="LOCAL" name="crypto_wallet@localhost" uuid="bda1aa26-6ce1-4083-a77c-6b8c446399e7">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/crypto_wallet</jdbc-url>
-
-    <data-source source="LOCAL" name="postgres@localhost" uuid="14b74e6d-7947-4a6c-b976-37c4264ab644">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>
-

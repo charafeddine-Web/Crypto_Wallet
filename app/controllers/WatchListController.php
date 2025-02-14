@@ -40,8 +40,8 @@ Class WatchListController extends Controller{
             $circulatingsupply = $_POST['circulatingsupply'];
             $totalsupply = $_POST['total_supply'];
             if($this->currentModel->AddCrypto($name, $symbol, $slog, $maxsupply, $prix, $marketcap, $volume24h, $circulatingsupply, $totalsupply)) {
-                $_SESSION['session_success'] = 'Crypto added to watchlist';
-                header("Location: /Crypto_Wallet/PagesController/Market");
+                $_SESSION['success'] = 'Crypto added to watchlist';
+                header("Location: ".URLROOT."/PagesController/market");
                 exit();
             }else{
                 $_SESSION['session_error'] = 'Failed to add crypto to watchlist';
