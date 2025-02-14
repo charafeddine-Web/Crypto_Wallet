@@ -38,4 +38,5 @@ Class CryptoController extends Controller {
             exit();
         }
     }
+
 }

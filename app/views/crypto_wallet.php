@@ -7,6 +7,7 @@
     <title>Nexus Crypto - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -23,6 +24,9 @@
             }
         }
     </script>
+    <style>
+
+    </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen">
 
@@ -110,6 +114,11 @@
 </div>
 
 <div class="container mx-auto px-4 py-8">
+<!--    chart     -->
+        <h2 class="text-xl font-semibold mb-4">Wallet Balance Distribution</h2>
+    <div class="bg-slate-800 rounded-xl p-6 mb-8 flex justify-center">
+        <canvas id="walletChart" style="width: 500px; height: 500px;></canvas>
+    </div>
     <!-- Balance Card -->
     <div class="bg-slate-800 rounded-xl p-6 mb-8">
         <div class="flex items-center justify-between mb-4">
@@ -208,7 +217,7 @@
 
 <script>
     // Initialize Lucide icons
-    lucide.createIcons();
+    // lucide.createIcons();
 
     // Modal toggle function
     function toggleModal(modalname) {
@@ -222,6 +231,41 @@
     function closeModal() {
         document.getElementById("topModal").style.display = "none";
     }
+    const chartData = {
+        labels: <?php echo json_encode($data['labels']); ?>,
+        amounts: <?php echo json_encode($data['amounts']); ?>
+    };
+    console.log(chartData)
+
+    const ctx = document.getElementById('walletChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: 'Wallet Amount',
+                data: chartData.amounts,
+                backgroundColor: [
+                    'rgba(99, 102, 241, 0.8)', // Indigo
+                    'rgba(139, 92, 246, 0.8)', // Purple
+                    'rgba(59, 130, 246, 0.8)', // Blue
+                    'rgba(16, 185, 129, 0.8)', // Green
+                    'rgba(245, 158, 11, 0.8)', // Yellow
+                    'rgba(244, 63, 94, 0.8)'  // Red
+                ],
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: true, position: 'top' },
+                tooltip: { enabled: true }
+            }
+        }
+    });
 </script>
 </body>
 </html>

@@ -40,11 +40,23 @@ class PagesController extends Controller
     public function my_wallet(){
         $sold = $this->cryptoModel->getsoldeUSDT();
         $data = ['soldusdt' => $sold];
+
+        $data = $this->cryptoModel->getCurrencieAmount();
+        //prepare data for the chart
+        $chartData = [
+            'labels' => [],
+            'amounts'=> []
+        ];
+        // FOREACH ROW OF DATA PUSH THE NOM TO $chartData['labels'] AND amount to chartdata['amounts']
+        foreach ($data as $row){
+            $chartData['labels'][] = $row->nom;//currency names
+            $chartData['amounts'][] = $row->amount;//Amount;
+        }
+        $this->view('crypto_wallet',$chartData);
         $this->view('crypto_wallet', $data);
+
     }
 
-    public function market(){
-        $this->view('market');
-    }
+
 
 }
