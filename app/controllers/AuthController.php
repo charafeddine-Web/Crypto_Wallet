@@ -114,7 +114,6 @@ class AuthController extends Controller
 
     public function verify()
     {
-        session_start();
 
         if (!isset($_SESSION['email']) || !isset($_SESSION['verification_code'])) {
             $_SESSION['session_error'] = ["You need to register first."];
@@ -154,7 +153,6 @@ class AuthController extends Controller
     public function login()
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
-            session_start();
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
@@ -190,7 +188,7 @@ class AuthController extends Controller
             $_SESSION['user_email'] = $user->email;
             $_SESSION['session_success'] = ["Login successful!"];
 
-            header('Location: /Crypto_Wallet/PagesController/index');
+            header('Location: /Crypto_Wallet/');
             exit();
         }
 

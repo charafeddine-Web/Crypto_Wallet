@@ -38,4 +38,14 @@ Class CryptoController extends Controller {
             exit();
         }
     }
+    public function buyCryptos(){
+        $wallet_id = $_SESSION['wallet_id'];
+        $crypto_id = $_POST['crypto_id'];
+        $qte = $_POST['qte'];
+
+        $this->currentModel->updateWallet($crypto_id, $qte, $wallet_id);
+
+        header('Location: ' . URLROOT . '/PagesController/send');
+    }
+
 }

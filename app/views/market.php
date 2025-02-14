@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Crypto - Markets</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/market.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/watchlist.css">
+    <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/favicon.svg" type="image/svg+xml">
+    <link href="https://unpkg.com/tailwindcss@0.3.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -51,15 +60,21 @@
                 </h1>
                 <div class="hidden md:flex space-x-6">
                     <a href="<?php echo URLROOT ?>/" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Home</a>
-                    <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-primary border-b-2 border-accent-primary px-2 py-4">Markets</a>
-                    <a href="#" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Trade</a>
-                    <a href="<?php echo URLROOT ?>/PagesController/watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">About</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
                 </div>
             </div>
-            <div class="flex items-center space-x-4">
-                <button class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Sign In</button>
-                <button class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Get Started</button>
-            </div>
+            <?php if(!isset($_SESSION['user_id'])): ?>
+                <div class="flex items-center space-x-4">
+                    <a href="<?php echo URLROOT ?>/AuthController/login" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log in</a>
+                    <a href="<?php echo URLROOT ?>/AuthController/register" class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Sign Up</a>
+                </div>
+            <?php else: ?>
+                <div class="flex items-center space-x-4">
+                    <a href="<?php echo URLROOT ?>/AuthController/logout" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log out</a>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </nav>
@@ -100,49 +115,49 @@
                         <input type="hidden" name="cryptoId" value="1">
                         <input type="hidden" name="idUser" value="1">
                         <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">1</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fab fa-bitcoin text-warning"></i>
-                                <span class="font-medium text-text-primary">Bitcoin</span>
-                                <span class="text-text-secondary">BTC</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$65,432.10</td>
-                        <td class="text-right p-4 text-success">+2.5%</td>
-                        <td class="text-right p-4 text-text-primary">$1.28T</td>
-                        <td class="text-right p-4 text-text-primary">$28.5B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
+                            <td class="p-4 text-text-primary">1</td>
+                            <td class="p-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fab fa-bitcoin text-warning"></i>
+                                    <span class="font-medium text-text-primary">Bitcoin</span>
+                                    <span class="text-text-secondary">BTC</span>
+                                </div>
+                            </td>
+                            <td class="text-right p-4 text-text-primary">$65,432.10</td>
+                            <td class="text-right p-4 text-success">+2.5%</td>
+                            <td class="text-right p-4 text-text-primary">$1.28T</td>
+                            <td class="text-right p-4 text-text-primary">$28.5B</td>
+                            <td class="text-center p-4">
+                                <button class="text-text-secondary hover:text-warning transition">
+                                    <i class="far fa-star"></i>
+                                </button>
+                            </td>
+                        </tr>
                     </form>
                     <form action="<?php echo URLROOT ?>/WatchListController/addToWatchList" method="POST">
                         <input type="hidden" name="cryptoId" value="1">
                         <input type="hidden" name="idUser" value="2">
-                    <!-- Ethereum -->
-                    <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-                        <td class="p-4 text-text-primary">2</td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <i class="fab fa-ethereum text-accent-primary"></i>
-                                <span class="font-medium text-text-primary">Ethereum</span>
-                                <span class="text-text-secondary">ETH</span>
-                            </div>
-                        </td>
-                        <td class="text-right p-4 text-text-primary">$3,521.80</td>
-                        <td class="text-right p-4 text-success">+3.2%</td>
-                        <td class="text-right p-4 text-text-primary">$421.6B</td>
-                        <td class="text-right p-4 text-text-primary">$15.2B</td>
-                        <td class="text-center p-4">
-                            <button class="text-text-secondary hover:text-warning transition">
-                                <i class="far fa-star"></i>
-                            </button>
-                        </td>
-                    </tr>
-                        </form>
+                        <!-- Ethereum -->
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-4 text-text-primary">2</td>
+                            <td class="p-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fab fa-ethereum text-accent-primary"></i>
+                                    <span class="font-medium text-text-primary">Ethereum</span>
+                                    <span class="text-text-secondary">ETH</span>
+                                </div>
+                            </td>
+                            <td class="text-right p-4 text-text-primary">$3,521.80</td>
+                            <td class="text-right p-4 text-success">+3.2%</td>
+                            <td class="text-right p-4 text-text-primary">$421.6B</td>
+                            <td class="text-right p-4 text-text-primary">$15.2B</td>
+                            <td class="text-center p-4">
+                                <button class="text-text-secondary hover:text-warning transition">
+                                    <i class="far fa-star"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </form>
                     <!-- Binance Coin -->
                     <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
                         <td class="p-4 text-text-primary">3</td>
@@ -176,13 +191,7 @@
             </div>
             <div class="flex space-x-2">
                 <button class="px-4 py-2 bg-card-dark hover:bg-white/10 transition rounded-lg text-text-primary">Previous</button>
-                <form action="<?php echo URLROOT ?>/NotificationControler/SendEmail" method="POST">
-                    <input type="hidden" name="email" value="ey449751@gmail.com">
-                    <input type="hidden" name="reciver" value="ey449751@gmail.com">
-                    <input type="hidden" name="amount" value="100">
-                    <input type="hidden" name="type" value="nik">
-                    <button  class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg text-text-primary">Next</button>
-                </form>
+                <button class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg text-text-primary">Next</button>
             </div>
         </div>
     </div>
