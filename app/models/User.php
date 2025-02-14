@@ -7,13 +7,12 @@ class User {
         $this->db = new Database;
     }
     public function check_email_or_nexusID($data){
-        // var_dump($data);
-        // return $data;
+
         if (is_numeric($data)) {
 
             $this->db->query("SELECT nexusid FROM users WHERE nexusid= :input");
         } else {
-            $this->db->query("SELECT nexusid FROM users WHERE email= :input");
+            $this->db->query("SELECT email FROM users WHERE email= :input");
         }
 
 
@@ -23,6 +22,11 @@ class User {
         return $this->db->single();
 
     }
+//    public function check_email_or_nexusID($email) {
+//        $this->db->query("SELECT email FROM users WHERE email = :email");
+//        $this->db->bind(':email', $email);
+//        return $this->db->single();
+//    }
     public function register($data)
     {
         try {

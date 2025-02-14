@@ -38,15 +38,17 @@ class Wallet {
 
     
     public function wallet_sell($data){
-        $row=$this->check_Qte_Sell($data['cryptoid'],$data['coin_amount']);
+        $row=$this->check_Qte_Sell($data['cryptoid'],$data['cryptoamount']);
         if($row){
-
             $this->conn->query("UPDATE  portefeuille set soldusdt = soldusdt - :qte where user_id =:user_id AND crypto_id=:crypto_id ");
             $this->conn->bind(':user_id', $_SESSION['user_id']);
             $this->conn->bind(':crypto_id', $data['cryptoid']);
-            $this->conn->bind(':qte', $data['coin_amount']);
-            $this->conn->execute();
-            return true;
+            $this->conn->bind(':qte', $data['cryptoamount']);
+            if ($this->conn->execute()){
+                return true;
+            }else{
+                die('fack error');
+            }
         }else{
         return false;
         }

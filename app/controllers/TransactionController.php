@@ -18,7 +18,8 @@ class TransactionController extends Controller {
     {
         $data = $this->apimodel->getdatafromapi(100);
         // var_dump($data);
-      
+        $_SESSION['success'] = "Buy avec success !";
+
         $this->view('send',$data);
         
     }
@@ -47,8 +48,10 @@ class TransactionController extends Controller {
         ];
         // check if i have the amount 
         $result = $this->wallet->wallet_sell($data);
+
         if($result){
             $this->transaction->sell_transac($data);
+            $_SESSION['success'] = "Sell avec success !";
             $this->Buy_sell_page();
     
         }else{
@@ -59,7 +62,7 @@ class TransactionController extends Controller {
         
      }
     public function send_transac(){
-        
+
         $coin = $this->wallet->check_Qte_Sel($_POST['cryptoid'], $_POST['coin_amount']);
         if (!$coin) {
             $_SESSION['error'] = "Not enough funds in your wallet";
@@ -76,7 +79,7 @@ class TransactionController extends Controller {
                 header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
                 exit();
             }
-            $_POST['email']=$receiver->nexusid;
+            $_POST['email']=$receiver->email;
         }
 
         if(!isset($_SESSION['user_id'])){
@@ -84,9 +87,9 @@ class TransactionController extends Controller {
             header('Location: /Crypto_Wallet/AuthController/login');
             exit();
         }
-    
+
         $data = [
-            'nexusid' => $_POST['email'],
+            'receiver_email' => $_POST['email'],
             'cryptoid' => $_POST['cryptoid'],
             'coin_amount' => $_POST['coin_amount'],
             'type_transac'=>'send'
@@ -100,7 +103,8 @@ class TransactionController extends Controller {
             header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
             exit();
         }
-        
+
     }
+
 }
 
