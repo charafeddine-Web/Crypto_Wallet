@@ -14,7 +14,7 @@ class Database{
 
     public function __construct()
     {
-        $dsn = 'mysql:host='.$this->host.';dbname='.$this->dbname;
+        $dsn = 'pgsql:host='.$this->host.';dbname='.$this->dbname;
         $options = array(
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -23,8 +23,7 @@ class Database{
         try{
             $this->dbh = new PDO($dsn,$this->user,$this->password,$options);
         }catch (PDOException $e){
-            $this->error = $e->getMessage();
-            echo $this->error;
+            echo $e->getMessage();
         }
     }
     // prepare statement with query
@@ -68,5 +67,10 @@ class Database{
     // Get row Count
     public function rowCount(){
         return $this->stmt->rowCount();
+    }
+
+    // Get last insertid
+    public function lastInsertId(){
+        return $this->dbh->lastInsertId();
     }
 }

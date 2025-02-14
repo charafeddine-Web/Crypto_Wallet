@@ -1,0 +1,330 @@
+:root {
+    --black: #222327;
+    --night: #17181c;
+    --blue: #3874ff;
+    --white: #fafafa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: #17181c;
+}
+
+aside {
+    width: 13%;
+    background-color: var(--black);
+    position: fixed;
+    padding-top: 25px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: center;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 65px;
+    padding-left: 20px;
+}
+
+
+aside h2 {
+    color: var(--white);
+    font-size: 35px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 25px;
+}
+
+aside nav a {
+    border-left: 5px solid var(--black);
+    padding: 13px 20px;
+    color: #fafafa;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+}
+
+aside nav a:hover {
+    border-left: 5px solid var(--blue);
+    background-color: #3874ff13;
+    transition: all ease 1s;
+    color: #dae4fa;
+}
+
+.footer {
+    background: #3874ff;
+    width: 90%;
+    height: 130px;
+    position: absolute;
+    bottom: 20px;
+    align-self: center;
+    border-radius: 10px;
+}
+
+article {
+    width: 87%;
+    margin-left: 5%;
+    background-color: var(--night);
+    padding: 20px 30px;
+    color: var(--white);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search input {
+    border: 0px;
+    outline: 0px;
+    background-color: var(--black);
+    padding: 14px 10px;
+    font-size: 17px;
+    border-radius: 5px 0px 0px 5px;
+    caret-color: #3874ff;
+    color: #fafafa;
+}
+
+.notif {
+    position: relative;
+}
+
+.notif button {
+    background: transparent;
+    font-size: 25px;
+    border: none;
+    outline: none;
+    color: #fafafa;
+    opacity: 0.8;
+}
+
+.badge {
+    background-color: #3874ff;
+    width: 10px;
+    height: 10px;
+    border-radius: 200px;
+    position: absolute;
+    top: 2px;
+    right: 0px;
+}
+
+.profile button {
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 200px;
+}
+
+.search i {
+    color: #888888;
+    background-color: var(--black);
+    padding: 16px 7px;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.cards {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 35px;
+}
+
+.front-content h2 {
+    color: #3874ff;
+    text-shadow: 2px 2px 4px #3874ff33;
+    text-align: left;
+    width: 80%;
+}
+
+.card-container {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    border-radius: 10px;
+    /* box-shadow: #3874ff17 0 15px 30px -5px; */
+    overflow: hidden;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.card .front-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #222327;
+    justify-content: space-evenly;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1)
+}
+
+.data{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+.card .front-content p {
+    /* font-size: 32px;
+    font-weight: 700;
+    opacity: 1; */
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1)
+}
+
+.card .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    background: #3874ff;
+    color: #e8e8e8;
+    padding: 20px;
+    line-height: 1.5;
+    border-radius: 5px;
+    transform: translatex(96%);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.card .content .heading {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.card:hover .content {
+    transform: translateY(0);
+}
+
+.card:hover .front-content {
+    transform: translateX(20%);
+}
+
+.card:hover .front-content p {
+    opacity: 0;
+}
+.btns{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+.btns a{
+    background-color: #fafafa70;
+    padding: 7px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    color: #fafafa;
+    font-weight: 500;
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 25rem;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+    outline: none;
+}
+
+/******** Chrome, Safari, Opera and Edge Chromium styles ********/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+    background-color: #fafafa;
+    border-radius: 0.5rem;
+    height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    margin-top: -4px;
+    /* Centers thumb on the track */
+    background-color: #3874ff;
+    border-radius: 0.5rem;
+    height: 1rem;
+    width: 1rem;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+    outline: 3px solid #3874ff;
+    outline-offset: 0.125rem;
+}
+
+input[type="range"]::-moz-range-track {
+    background-color: #fafafa;
+    border-radius: 0.5rem;
+    height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+    background-color: #3874ff;
+    border: none;
+    /*Removes extra border that FF applies*/
+    border-radius: 0.5rem;
+    height: 1rem;
+    width: 1rem;
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+    outline: 3px solid #3874ff;
+    outline-offset: 0.125rem;
+}

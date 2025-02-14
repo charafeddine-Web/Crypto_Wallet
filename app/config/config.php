@@ -1,9 +1,12 @@
 <?php
-// DB PARAMS
-define('DB_HOST','localhost');
-define('DB_USER','postgres');
-define('DB_PASS','__DBPASSWORD__');
-define('DB_NAME','__DBNAME__');
+session_start();
+
+
+const DB_HOST = 'localhost';
+const DB_USER = 'postgres';
+const DB_PASS = 'Charaf2025';
+const DB_NAME = 'crypto_wallet';
+
 
 
 
