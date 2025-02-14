@@ -8,7 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market</title>
     <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/coins.png" type="image/x-icon">
-    
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/market.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/watchlist.css">
+    <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/favicon.svg" type="image/svg+xml">
+    <link href="https://unpkg.com/tailwindcss@0.3.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/favicon.svg" type="image/svg+xml">
@@ -28,7 +37,34 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine-ie11.js" integrity="sha512-6m6AtgVSg7JzStQBuIpqoVuGPVSAK5Sp/ti6ySu6AjRDa1pX8mIl1TwP9QmKXU+4Mhq/73SzOk6mbNvyj9MPzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<!-- Navigation -->
+<nav class="relative z-10 border-b border-white/10 bg-ultra-dark/80 backdrop-blur-xl text-white">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-8">
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
+                    Nexus
+                </h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="<?php echo URLROOT ?>/" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Home</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
+                </div>
+            </div>
+            <?php if(!isset($_SESSION['user_id'])): ?>
+                <div class="flex items-center space-x-4">
+                    <a href="<?php echo URLROOT ?>/AuthController/login" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log in</a>
+                    <a href="<?php echo URLROOT ?>/AuthController/register" class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Sign Up</a>
+                </div>
+            <?php else: ?>
+                <div class="flex items-center space-x-4">
+                    <a href="<?php echo URLROOT ?>/AuthController/logout" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log out</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
 <article>
     <h1 class="text-center text-3xl">choose your transaction</h1>
     <div class=" flex items-center justify-around w-[50vw] mx-auto w-52">
