@@ -66,7 +66,7 @@
     </div>
 </nav>
 <article>
-    <h1 class="text-center text-3xl">choose your transaction</h1>
+    <h1 class="text-center text-3xl">Choose your transaction</h1>
     <div class=" flex items-center justify-around w-[50vw] mx-auto w-52">
 
         <button id="buy-button" class="buy-button mx-auto mt-8 bg-blue-500 text-white font-bold py-2 px-4 rounded">
