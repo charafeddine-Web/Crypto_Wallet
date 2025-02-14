@@ -114,11 +114,6 @@
 </div>
 
 <div class="container mx-auto px-4 py-8">
-<!--    chart     -->
-        <h2 class="text-xl font-semibold mb-4">Wallet Balance Distribution</h2>
-    <div class="bg-slate-800 rounded-xl p-6 mb-8 flex justify-center">
-        <canvas id="walletChart" style="width: 500px; height: 500px;></canvas>
-    </div>
     <!-- Balance Card -->
     <div class="bg-slate-800 rounded-xl p-6 mb-8">
         <div class="flex items-center justify-between mb-4">
@@ -133,9 +128,15 @@
             </div>
         </div>
         <div class="flex items-baseline gap-2">
-            <span class="text-4xl font-bold"><?php echo $data['soldusdt'] ?></span>
+            <span class="text-4xl font-bold"><?php echo $data['currentsold']['soldusdt']  ?></span>
             <span class="text-xl text-gray-400">USDT</span>
         </div>
+    </div>
+
+    <!--    chart     -->
+    <h2 class="text-xl font-semibold mb-4">Wallet Balance Distribution</h2>
+    <div class="bg-slate-800 rounded-xl p-6 mb-8 flex justify-center">
+        <canvas id="walletChart" style="width: 500px; height: 500px;"></canvas>
     </div>
 
     <!-- Recent Purchases -->
@@ -232,8 +233,8 @@
         document.getElementById("topModal").style.display = "none";
     }
     const chartData = {
-        labels: <?php echo json_encode($data['labels']); ?>,
-        amounts: <?php echo json_encode($data['amounts']); ?>
+        labels: <?php echo json_encode($data['chartData']['labels']); ?>,
+        amounts: <?php echo json_encode($data['chartData']['amounts']); ?>
     };
     console.log(chartData)
 

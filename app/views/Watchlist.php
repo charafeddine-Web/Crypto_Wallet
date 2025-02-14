@@ -104,10 +104,6 @@
 
             <div class="flex justify-between items-start mb-6">
                 <div class="flex items-center space-x-4">
-                    <div class="bg-white/5 p-2 rounded-xl">
-                        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin" class="w-10 h-10">
-                    </div>
-
                     <div>
                         <h2 class="text-xl font-bold"><?= $crypto->crypto_name ?></h2>
                         <p class="text-text-secondary text-sm"><?= $crypto->symbol ?></p>
