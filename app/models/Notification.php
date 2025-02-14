@@ -11,6 +11,7 @@ class Notification {
         $this->db = new Database();
     }
 
+
     function sendEmailNotification($senderEmail, $receiver, $amount, $cryptoType) {
         if (isset($senderEmail) || isset($receiver) || isset($amount) || isset($cryptoType)) {
             $mail = new PHPMailer(true);
