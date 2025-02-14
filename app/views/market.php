@@ -103,19 +103,34 @@
                     </thead>
                     <tbody>
                         <?php foreach ($data['cryptos'] as $crypto) : ?>
+
                             <tr>
+                                <td><form action="<?php echo URLROOT ?>/WatchListController/AddToDataBase" method="POST"></td>
                             <td class="text-left p-4"><?= htmlspecialchars($crypto['cmc_rank']); ?></td>
                                 <td class="text-left p-4"><?= htmlspecialchars($crypto['name']); ?> (<?= htmlspecialchars($crypto['symbol']); ?>)</td>
+                                <td><input type="hidden" name="name" value="<?= htmlspecialchars($crypto['name']); ?>"></td>
+                                <td><input type="hidden" name="symbol" value="<?= htmlspecialchars($crypto['symbol']); ?>"></td>
+                                <td><input type="hidden" name="slog" value="<?= htmlspecialchars($crypto['symbol']); ?>"></td>
                                 <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['price'], 2); ?></td>
+                                <td><input type="hidden" name="max_supply" value="<?= number_format($crypto['quote']['USD']['price'], 2); ?>"></td>
+                                <td><input type="hidden" name="prix" value="<?= number_format($crypto['quote']['USD']['price'], 2); ?>"></td>
                                 <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?></td>
+                                <td><input type="hidden" name="marketcap" value="<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?>"></td>
                                 <td class="text-left p-4 font-bold"
                                     style="color: <?= $crypto['quote']['USD']['percent_change_24h'] >= 0 ? 'green' : 'red'; ?>;">
                                     <?= number_format($crypto['quote']['USD']['percent_change_24h'], 2); ?>%
+
                                 </td>
+                                <td><input type="hidden" name="volume24h" value="<?=  number_format($crypto['quote']['USD']['percent_change_24h'], 2); ?>"></td>
                                 <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?></td>
-                                <td class="text-left p-4">$<?= number_format($crypto['quote']['USD']['volume_24h'], 0, '.', ','); ?></td>
-                                <td class="text-center p-4 cursor-pointer"><i class="fas fa-star mr-2  hover:text-yellow-500"></i></td>
+                                <td><input type="hidden" name="circulatingsupply" value="<?= number_format($crypto['quote']['USD']['market_cap'], 0, '.', ','); ?>"></td>
+                                <td
+                                        class="text-left p-4">$<?= number_format($crypto['quote']['USD']['volume_24h'], 0, '.', ','); ?></td>
+                                <td><input type="hidden" name="total_supply" value="<?= number_format($crypto['quote']['USD']['volume_24h'], 0, '.', ','); ?>"></td>
+                                <td class="text-center p-4 cursor-pointer"><button type="submit"><i class="fas fa-star mr-2  hover:text-yellow-500"></i></button></td>
+                                <td></form></td>
                             </tr>
+
                         <?php endforeach; ?>
                     </tbody>
                 </table>

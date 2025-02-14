@@ -27,22 +27,27 @@ Class WatchListController extends Controller{
             header("Location: /Home");
         }
     }
-    public function addToWatchList() {
+
+    public function AddToDataBase() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $cryptoId = $_POST['cryptoId'];
-            $userId = $_POST['idUser'];
-        if(!is_numeric($userId)|| !is_numeric($cryptoId)) {
-        echo $userId;
-        echo $cryptoId;
-        }
-        if($this->currentModel->addToWatchList($userId, $cryptoId)) {
-            $_SESSION['session_success'] = 'Crypto added to watchlist';
-            header("Location: /Crypto_Wallet/PagesController/Market");
-            exit();
-        }else{
-            $_SESSION['session_error'] = 'Failed to add crypto to watchlist';
-        }
+            $name = $_POST['name'];
+            $symbol = $_POST['symbol'];
+            $slog = $_POST['slog'];
+            $maxsupply = $_POST['max_supply'];
+            $prix = $_POST['prix'];
+            $marketcap = $_POST['marketcap'];
+            $volume24h = $_POST['volume24h'];
+            $circulatingsupply = $_POST['circulatingsupply'];
+            $totalsupply = $_POST['total_supply'];
+            if($this->currentModel->AddCrypto($name, $symbol, $slog, $maxsupply, $prix, $marketcap, $volume24h, $circulatingsupply, $totalsupply)) {
+                $_SESSION['session_success'] = 'Crypto added to watchlist';
+                header("Location: /Crypto_Wallet/PagesController/Market");
+                exit();
+            }else{
+                $_SESSION['session_error'] = 'Failed to add crypto to watchlist';
+            }
         }
     }
+
 
 }
