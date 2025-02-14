@@ -65,9 +65,10 @@ Class Crypto {
                 $this->db->execute();
 
             } else {
-                $this->db->query("INSERT INTO cryptowallet (user_id, crypto_name, amount) VALUES (1, :crypto_name, :amount)");
+                $this->db->query("INSERT INTO cryptowallet (user_id, crypto_name, amount) VALUES (:user_id, :crypto_name, :amount)");
                 $this->db->bind(':crypto_name', $crypto_name);
                 $this->db->bind(':amount', $amount);
+                $this->db->bind(':user_id', $_SESSION['user_id']);
                 $this->db->execute();
                 header("location:" . URLROOT . "/test");
             }
@@ -76,12 +77,13 @@ Class Crypto {
             throw new Exception("Error updating crypto wallet: " . $e->getMessage());
         }
     }
+
     // for deposit USDT in user account
     public function depositUSDT($data){
         try {
             $this->db->query('UPDATE portefeuille SET soldusdt = soldusdt + :soldeUSDT WHERE user_id = :user_id');
-            $this->db->bind(':soldeUSDT', $data['soldeUSDT']);
             $this->db->bind(':user_id', $_SESSION['user_id']);
+            $this->db->bind(':soldeUSDT', $data['soldeUSDT']);
             $this->db->execute();
         }
         catch(PDOException $e){
@@ -95,5 +97,15 @@ Class Crypto {
         $this->db->execute();
        $result = $this->db->single();
        return $result->soldusdt;
+    }
+
+    public function getCurrencieAmount(){
+        $this->db->query('
+        SELECT cryptoWallet.amount , cryptomonnaie.nom FROM cryptowallet 
+        join cryptomonnaie on cryptomonnaie.id_cryptomonnaie = cryptowallet.id_cryptomonnaie 
+        where cryptowallet.user_id  = :user_id ');
+        // SWITCH 1000 WITH $_SESSION['user_id']
+        $this->db->bind(':user_id',$_SESSION['user_id']);
+        return $this->db->resultSet() ;
     }
 }

@@ -19,9 +19,24 @@ class PagesController extends Controller
         $this->view('Dashboard');
     }
 
-    public function Market(){
-        $this->view('Market');
+    public function send(){
+        $fromAPI = $this->apimodel->getdatafromapi(10);
+        $data = ['data' => $fromAPI['data']];
+        $this->view('send', $data);
     }
+
+    public function market()
+    {
+        $fromAPI = $this->apimodel->getdatafromapi(10);
+        if (!isset($fromAPI['data']) || !is_array($fromAPI['data'])) {
+            $data = ['error' => 'Erreur lors du chargement des cryptos.'];
+        } else {
+            $data = ['cryptos' => $fromAPI['data']];
+        }
+
+        $this->view('market', $data);
+    }
+
 
     public function Watchlist(){
         $crypto = $this->watchlistModel->getWatchlist();
@@ -39,7 +54,21 @@ class PagesController extends Controller
     public function my_wallet(){
         $sold = $this->cryptoModel->getsoldeUSDT();
         $data = ['soldusdt' => $sold];
+
+        $data = $this->cryptoModel->getCurrencieAmount();
+        //prepare data for the chart
+        $chartData = [
+            'labels' => [],
+            'amounts'=> []
+        ];
+        // FOREACH ROW OF DATA PUSH THE NOM TO $chartData['labels'] AND amount to chartdata['amounts']
+        foreach ($data as $row){
+            $chartData['labels'][] = $row->nom;//currency names
+            $chartData['amounts'][] = $row->amount;//Amount;
+        }
+        $this->view('crypto_wallet',$chartData);
         $this->view('crypto_wallet', $data);
+
     }
 
 
