@@ -18,7 +18,8 @@ class TransactionController extends Controller {
     {
         $data = $this->apimodel->getdatafromapi(100);
         // var_dump($data);
-      
+        $_SESSION['success'] = "Buy avec success !";
+
         $this->view('send',$data);
         
     }
@@ -47,46 +48,63 @@ class TransactionController extends Controller {
         ];
         // check if i have the amount 
         $result = $this->wallet->wallet_sell($data);
+
         if($result){
             $this->transaction->sell_transac($data);
+            $_SESSION['success'] = "Sell avec success !";
             $this->Buy_sell_page();
     
         }else{
-            echo "You don't have this amount in your wallet";
+            $_SESSION['error'] = "Not enough funds in your wallet";
+            header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
+            exit();
         }
         
      }
     public function send_transac(){
-        
+
         $coin = $this->wallet->check_Qte_Sel($_POST['cryptoid'], $_POST['coin_amount']);
-        var_dump($coin);
         if (!$coin) {
-            echo "Vous n'avez pas assez de fonds pour envoyer cette transaction.";
-            return;
+            $_SESSION['error'] = "Not enough funds in your wallet";
+            header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
+            exit();
         }
 
         $quantite = $coin->soldusdt;
 
         if(!is_numeric($_POST['email'])){
             $receiver=$this->user->check_email_or_nexusID($_POST['email']);
-            
             if (!$receiver) {
-                echo "Le destinataire est introuvable.";
-                return;
+                $_SESSION['error'] = "Destinatire introuvable";
+                header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
+                exit();
             }
-            $_POST['email']=$receiver->id;
+            $_POST['email']=$receiver->email;
         }
-    
+
+        if(!isset($_SESSION['user_id'])){
+            $_SESSION['session_error'] = ["You're not authenticated !"];
+            header('Location: /Crypto_Wallet/AuthController/login');
+            exit();
+        }
+
         $data = [
-            'nexusid' => $_POST['email'],
+            'receiver_email' => $_POST['email'],
             'cryptoid' => $_POST['cryptoid'],
             'coin_amount' => $_POST['coin_amount'],
-            
             'type_transac'=>'send'
         ];
-        print_r($data);
-        $this->transaction->send_coin($data);
-        
+
+        if($this->transaction->send_coin($data)){
+            $result = $this->wallet->wallet_sell($data);
+            $receiver=$this->wallet->wallet_receiver($data);
+            $_SESSION['success'] = "you have send ".$data['coin_amount']." coins to user ID:'". $data['nexusid'] ."' successfully!";
+
+            header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
+            exit();
+        }
+
     }
+
 }
 

@@ -8,7 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market</title>
     <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/coins.png" type="image/x-icon">
-    
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/market.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/watchlist.css">
+    <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/favicon.svg" type="image/svg+xml">
+    <link href="https://unpkg.com/tailwindcss@0.3.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/favicon.svg" type="image/svg+xml">
@@ -28,9 +37,55 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine-ie11.js" integrity="sha512-6m6AtgVSg7JzStQBuIpqoVuGPVSAK5Sp/ti6ySu6AjRDa1pX8mIl1TwP9QmKXU+4Mhq/73SzOk6mbNvyj9MPzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Navigation -->
+<nav class="relative z-10 border-b border-white/10 bg-ultra-dark/80 backdrop-blur-xl text-white">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-8">
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-white">
+                    Nexus
+                </h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="<?php echo URLROOT ?>/" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Home</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
+                    <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
+                </div>
+            </div>
+            <?php if(!isset($_SESSION['user_id'])): ?>
+                <div class="flex items-center space-x-4">
+                    <a href="<?php echo URLROOT ?>/AuthController/login" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log in</a>
+                    <a href="<?php echo URLROOT ?>/AuthController/register" class="px-4 py-2 bg-accent-primary hover:bg-accent-secondary transition rounded-lg">Sign Up</a>
+                </div>
+            <?php else: ?>
+                <div class="flex items-center space-x-4">
+                    <a href="<?php echo URLROOT ?>/AuthController/logout" class="px-4 py-2 text-text-primary hover:text-accent-primary transition">Log out</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
+
+<?php if(isset($_SESSION['success'])): ?>
+    <div id="topModal" class="fixed top-0 left-0 w-full bg-green-400 shadow-md p-4 flex items-center justify-between z-50">
+        <span class="text-lg font-semibold text-white-800"><?php echo $_SESSION['success'] ?></span>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-800">&times;</button>
+    </div>
+    <?php unset($_SESSION['success']) ?>
+<?php endif; ?>
+
+
+<?php if(isset($_SESSION['error'])): ?>
+    <div id="topModal" class="fixed top-0 left-0 w-full bg-red-400 shadow-md p-4 flex items-center justify-between z-50">
+        <span class="text-lg font-semibold text-white-800"><?php echo $_SESSION['error'] ?></span>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-800">&times;</button>
+    </div>
+    <?php unset($_SESSION['error']) ?>
+<?php endif; ?>
+
 
 <article>
-    <h1 class="text-center text-3xl">choose your transaction</h1>
+    <h1 class="text-center text-3xl">Choose your transaction</h1>
     <div class=" flex items-center justify-around w-[50vw] mx-auto w-52">
 
         <button id="buy-button" class="buy-button mx-auto mt-8 bg-blue-500 text-white font-bold py-2 px-4 rounded">
@@ -157,7 +212,7 @@
             </div>
             <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2">Enter the dollar amount</h1>
             <div class="mx-auto w-fit">
-                <button class="mx-auto mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button type="submit" class="mx-auto mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     SELL
                 </button>
             </div>
@@ -176,7 +231,7 @@
             <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2"> ENTER COIN AMOUNT</h1>
 
             <div class="w-[35vw] mx-auto flex items-center  ">
-                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="coin_amount2" type="" name="coin_amount" placeholder="00.00">
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="coin_amount2" type=""  placeholder="00.00">
             </div>
             <div class=" md:w-2/3 px-3 mx-auto mb-6 md:mb-0 flex items-center justify-around">
 
@@ -209,8 +264,9 @@
                     <label class="block uppercase tracking-wide text-white text-lg font-bold mb-2" for="grid-state">
                         choose your coin
                     </label>
+
                     <div class="relative h-full">
-                        <input class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="amout_dollar_send" readonly>
+                        <input class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="amout_dollar_send" name="coin_amount" readonly>
                         </input>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -429,7 +485,24 @@ $("#coin_amount2").on('input', function() {
         });
     });
     /****************************************** */
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Modal toggle function
+        function toggleModal(modalname) {
+        const modal = document.getElementById(modalname);
+        modal.classList.toggle('hidden');
+    }
+
+        function openModal() {
+        document.getElementById("topModal").style.display = "flex";
+    }
+        function closeModal() {
+        document.getElementById("topModal").style.display = "none";
+    }
 </script>
+
 
 </body>
 
