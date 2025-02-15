@@ -166,7 +166,7 @@
                     <label class="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2" for="grid-state">
                         Enter the dollar amount</label>
                     <div class="relative h-full">
-                        <input class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="amount" id="amount" type="" placeholder="00.00">
+                        <input class=" block  appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="amount" id="amount" type="number" placeholder="00.00">
                         </input>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->

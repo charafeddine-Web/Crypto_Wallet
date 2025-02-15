@@ -46,13 +46,10 @@ class Wallet {
             $this->conn->bind(':qte', $data['cryptoamount']);
             if ($this->conn->execute()){
                 return true;
-            }else{
-                die('fack error');
             }
         }else{
             return false;
         }
-
     }
 
     public function wallet_receiver($data){
@@ -64,25 +61,61 @@ class Wallet {
 
 
 
-    public function add_to_wallet($data){
-        $this->conn->query("SELECT soldusdt, CASE WHEN soldusdt > 0 THEN true ELSE false END as result FROM portefeuille WHERE user_id=:user_id AND crypto_id=:crypto_id");
-        $this->conn->bind(':user_id',$_SESSION['user_id']);
+    public function add_to_wallet($data) {
+        $this->conn->query("SELECT soldusdt FROM portefeuille WHERE user_id=:user_id AND crypto_id=:crypto_id");
+        $this->conn->bind(':user_id', $_SESSION['user_id']);
+        $this->conn->bind(':crypto_id', $data['cryptoid']);
+        $this->conn->execute();
+        $row = $this->conn->single();
+
+        var_dump("Avant Update", $row);
+
+        if ($row) {
+            if ((float) $row->soldusdt >= (float) $data['amount']) {
+                $this->insertintoCryptoWallet($data);
+
+                $this->conn->query("UPDATE portefeuille SET soldusdt = soldusdt - :qtei WHERE user_id = :user_id AND crypto_id = :crypto_id");
+                $this->conn->bind(':qtei', (float) $data['amount']);
+                $this->conn->bind(':user_id', $_SESSION['user_id']);
+                $this->conn->bind(':crypto_id', $data['cryptoid']);
+                $this->conn->execute();
+
+                $this->conn->query("SELECT soldusdt FROM portefeuille WHERE user_id=:user_id AND crypto_id=:crypto_id");
+                $this->conn->bind(':user_id', $_SESSION['user_id']);
+                $this->conn->bind(':crypto_id', $data['cryptoid']);
+                $this->conn->execute();
+                $newRow = $this->conn->single();
+                var_dump("Après Update", $newRow);
+            } else {
+                $_SESSION['error'] = 'Not enough USDT in your wallet';
+            }
+        } else {
+            $this->conn->query("INSERT INTO portefeuille (user_id, crypto_id, soldusdt) VALUES (:user_id, :crypto_id, :qte)");
+            $this->conn->bind(':user_id', $_SESSION['user_id']);
+            $this->conn->bind(':crypto_id', $data['cryptoid']);
+            $this->conn->bind(':qte', (float) $data['amount']);
+            $this->conn->execute();
+
+            $this->insertintoCryptoWallet($data);
+        }
+    }
+
+
+
+    public function insertintoCryptoWallet($data){
+        $this->conn->query('SELECT id_cryptomonnaie FROM cryptowallet WHERE user_id = :user_id AND id_cryptomonnaie = :crypto_id');
+        $this->conn->bind(':user_id', $_SESSION['user_id']);
         $this->conn->bind(':crypto_id', $data['cryptoid']);
         $this->conn->execute();
         $row=$this->conn->single();
-
-
         if($row){
-            $data['cryptoamount']=$row->soldusdt  - $data['amount'];
-
-            $this->conn->query("UPDATE  portefeuille set soldusdt =:qte where user_id =:user_id AND crypto_id=:crypto_id ");
+            $this->conn->query('UPDATE cryptowallet SET amount = amount + :qte WHERE user_id = :user_id AND id_cryptomonnaie = :crypto_id');
         }else{
-            $this->conn->query("INSERT INTO portefeuille (user_id,crypto_id,soldusdt ) VALUES (:user_id,:crypto_id,:qte)");
+            $this->conn->query('INSERT INTO cryptowallet (user_id,id_cryptomonnaie,amount) VALUES (:user_id,:crypto_id,:qte)');
         }
-
         $this->conn->bind(':user_id', $_SESSION['user_id']);
         $this->conn->bind(':crypto_id', $data['cryptoid']);
-        $this->conn->bind(':qte', $data['cryptoamount']);
+        $this->conn->bind(':qte', (float) $data['amount']);
         $this->conn->execute();
     }
 }
