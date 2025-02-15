@@ -59,6 +59,7 @@
                         <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
                         <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
                         <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
+                        <a href="<?php echo URLROOT ?>/TransactionController/Buy_sell_page" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Transaction</a>
                     </div>
                 </div>
                 <?php if(!isset($_SESSION['user_id'])): ?>

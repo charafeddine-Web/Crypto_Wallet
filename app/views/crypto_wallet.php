@@ -24,9 +24,6 @@
             }
         }
     </script>
-    <style>
-
-    </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen">
 
@@ -51,6 +48,7 @@
                     <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
                     <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
                     <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
+                    <a href="<?php echo URLROOT ?>/TransactionController/Buy_sell_page" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Transaction</a>
                 </div>
             </div>
             <?php if(!isset($_SESSION['user_id'])): ?>
@@ -119,9 +117,6 @@
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold">Wallet Balance</h2>
             <div class="flex gap-2">
-                <button onclick="toggleModal('sendModal')" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm">
-                    Send
-                </button>
                 <button onclick="toggleModal('depositModal')" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg text-sm">
                     Deposit
                 </button>
@@ -137,82 +132,6 @@
     <h2 class="text-xl font-semibold mb-4">Wallet Balance Distribution</h2>
     <div class="bg-slate-800 rounded-xl p-6 mb-8 flex justify-center">
         <canvas id="walletChart" style="width: 500px; height: 500px;"></canvas>
-    </div>
-
-    <!-- Recent Purchases -->
-    <div class="bg-slate-800 rounded-xl p-6">
-        <h2 class="text-xl font-semibold mb-6">Your Coins</h2>
-
-        <div class="space-y-4">
-            <!-- Bitcoin -->
-            <div class="flex items-center justify-between p-4 bg-slate-700 rounded-lg">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
-                        <i data-lucide="bitcoin" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-medium">Bitcoin</h3>
-                        <p class="text-sm text-gray-400">0.0234 BTC</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="text-right mr-4">
-                        <p class="font-medium">$892.43</p>
-                        <p class="text-sm text-green-400">+2.4%</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm">Buy</button>
-                        <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">Sell</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ethereum -->
-            <div class="flex items-center justify-between p-4 bg-slate-700 rounded-lg">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                        <i data-lucide="waves" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-medium">Ethereum</h3>
-                        <p class="text-sm text-gray-400">1.45 ETH</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="text-right mr-4">
-                        <p class="font-medium">$1,243.21</p>
-                        <p class="text-sm text-red-400">-1.2%</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm">Buy</button>
-                        <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">Sell</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Solana -->
-            <div class="flex items-center justify-between p-4 bg-slate-700 rounded-lg">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
-                        <i data-lucide="disc" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-medium">Solana</h3>
-                        <p class="text-sm text-gray-400">12.5 SOL</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="text-right mr-4">
-                        <p class="font-medium">$324.20</p>
-                        <p class="text-sm text-green-400">+5.7%</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm">Buy</button>
-                        <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">Sell</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

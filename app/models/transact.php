@@ -10,14 +10,30 @@ class transact {
     {
         $this->conn = new Database;
     }
+    public function getWatchlistdata(){
+        $this->conn->query("select cryptomonnaie.nom ,cryptomonnaie.id_cryptomonnaie from watchlist join cryptomonnaie on cryptomonnaie.id_cryptomonnaie = watchlist.id_cryptomonnaie where watchlist.user_id = :user_id");
+        $this->conn->bind(":user_id", $_SESSION['user_id']);
+        return $this->conn->resultSet();
+    }
+
+    public function getmyWalletdata(){
+        $this->conn->query("
+SELECT c.nom, c.id_cryptomonnaie
+FROM portefeuille p
+JOIN cryptomonnaie c ON c.id_cryptomonnaie = p.crypto_id
+WHERE p.user_id = :user_id;");
+        $this->conn->bind(":user_id", $_SESSION['user_id']);
+        return $this->conn->resultSet();
+    }
+
     public function buy_transac($data){
         $this->conn->query("INSERT INTO transaction (sender_id,crypto_id,montant) VALUES (:sender,:crypto_id,:amount)");
         $this->conn->bind(':sender',  $_SESSION['user_id']);
         $this->conn->bind(':crypto_id', $data['cryptoid']);
-        $this->conn->bind(':amount', $data['cryptoamount']);
-      
-       $result= $this->conn->execute();
-        if ( $result){
+        $this->conn->bind(':amount', $data['amount']);
+
+        $result= $this->conn->execute();
+        if ($result){
             return true ;
         }
         else{
@@ -30,7 +46,7 @@ class transact {
         $this->conn->bind(':sender', $_SESSION['user_id']);
         $this->conn->bind(':crypto_id', $data['cryptoid']);
         $this->conn->bind(':amount', $data['cryptoamount']);
-      
+
         $this->conn->execute();
     }
 
@@ -71,5 +87,5 @@ class transact {
             exit('Transaction failed');
         }
     }
-    
+
 }

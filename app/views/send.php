@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market</title>
     <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/coins.png" type="image/x-icon">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/market.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/watchlist.css">
     <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="<?php echo URLROOT; ?>/image/favicon.svg" type="image/svg+xml">
@@ -25,9 +21,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ultra-dark': '#0A0F1C',
+                        'card-dark': '#151C2F',
+                        'accent-primary': '#6366F1',
+                        'accent-secondary': '#8B5CF6',
+                        'text-primary': '#E2E8F0',
+                        'text-secondary': '#64748B',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-ultra-dark text-text-primary min-h-screen font-sans">
 <style>
     .bg-active {
         background-color: #2d3e50;
@@ -50,6 +78,7 @@
                     <a href="<?php echo URLROOT ?>/PagesController/market" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Markets</a>
                     <a href="<?php echo URLROOT ?>/PagesController/Watchlist" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">WatchList</a>
                     <a href="<?php echo URLROOT ?>/PagesController/my_wallet" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">my Wallet</a>
+                    <a href="<?php echo URLROOT ?>/TransactionController/Buy_sell_page" class="text-text-secondary hover:text-accent-primary transition px-2 py-4">Transaction</a>
                 </div>
             </div>
             <?php if(!isset($_SESSION['user_id'])): ?>
@@ -84,6 +113,7 @@
 <?php endif; ?>
 
 
+
 <article>
     <h1 class="text-center text-3xl">Choose your transaction</h1>
     <div class=" flex items-center justify-around w-[50vw] mx-auto w-52">
@@ -113,11 +143,11 @@
                         choose your coin
                     </label>
                     <div class="relative">
-                        <select name="coin" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                        <select name="crypto_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
 
-                            <?php foreach ($data['data'] as $crypto) : ?>
-                                
-                                <option value="<?= $crypto['quote']['USD']['price'] . '/' . $crypto['name'] . '/' . $crypto['id']; ?>"><?= $crypto['name'] . '(' . $crypto['symbol'] . ')'; ?> </option>
+                            <?php foreach ($data['watchlist'] as $crypto) : ?>
+
+                                <option value="<?= $crypto->id_cryptomonnaie ?>"><?= $crypto->nom ?> </option>
 
 
                             <?php endforeach; ?>
@@ -165,7 +195,7 @@
         <form action="<?php echo URLROOT; ?>/TransactionController/sell_transac" method="post" class="  mx-auto shadow-lg shadow-indigo-500/50 rounded px-8 pt-6 pb-8 mb-4">
             <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2">Coin amount</h1>
             <div class="w-[35vw] mx-auto flex items-center  ">
-                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="coin_amount" type="" placeholder="00.00">
+                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="coin_amount" id="coin_amount" type="" placeholder="00.00">
             </div>
             <div class=" md:w-2/3 px-3 mx-auto mb-6 md:mb-0 flex items-center justify-around">
 
@@ -173,23 +203,22 @@
                     <label class="block uppercase tracking-wide text-white text-lg font-bold mb-2" for="grid-state">
                         choose your coin
                     </label>
-                    <form action="">
-                        <div class="relative">
-                            <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="coins">
+                    <div class="relative">
+                        <select name="crypto_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="coins">
 
-                                <?php foreach ($data['data'] as $crypto) : ?>
+                            <?php foreach ($data['walletdata'] as $crypto) : ?>
 
-                                    <option value="<?= $crypto['quote']['USD']['price'] . '/' . $crypto['name'] . '/' . $crypto['id']; ?>"><?= $crypto['name'] . '(' . $crypto['symbol'] . ')'; ?> </option>
+                                <option value="<?= $crypto->id_cryptomonnaie ?>"><?= $crypto->nom ?> </option>
 
 
-                                <?php endforeach; ?>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg class="fill-current h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                </svg>
-                            </div>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
                         </div>
+                    </div>
                 </div>
                 <svg class="m-8 w-fit h-28 w-28" xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                     <path fill="#ffffff" d="M535 41c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l64 64c4.5 4.5 7 10.6 7 17s-2.5 12.5-7 17l-64 64c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l23-23L384 112c-13.3 0-24-10.7-24-24s10.7-24 24-24l174.1 0L535 41zM105 377l-23 23L256 400c13.3 0 24 10.7 24 24s-10.7 24-24 24L81.9 448l23 23c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L7 441c-4.5-4.5-7-10.6-7-17s2.5-12.5 7-17l64-64c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zM96 64H337.9c-3.7 7.2-5.9 15.3-5.9 24c0 28.7 23.3 52 52 52l117.4 0c-4 17 .6 35.5 13.8 48.8c20.3 20.3 53.2 20.3 73.5 0L608 169.5V384c0 35.3-28.7 64-64 64H302.1c3.7-7.2 5.9-15.3 5.9-24c0-28.7-23.3-52-52-52l-117.4 0c4-17-.6-35.5-13.8-48.8c-20.3-20.3-53.2-20.3-73.5 0L32 342.5V128c0-35.3 28.7-64 64-64zm64 64H96v64c35.3 0 64-28.7 64-64zM544 320c-35.3 0-64 28.7-64 64h64V320zM320 352a96 96 0 1 0 0-192 96 96 0 1 0 0 192z" />
@@ -222,11 +251,11 @@
     </div>
     <div class="hidden mt-2" id="send">
         <form action="<?php echo URLROOT; ?>/TransactionController/send_transac" method="post" class=" w-[70vw]  mx-auto shadow-lg shadow-indigo-500/50 rounded px-8 pt-6 pb-8 mb-4">
-        <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2"> ENTER EMAIL RECEIVER OR NEXUS ID </h1>
+            <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2"> ENTER EMAIL RECEIVER OR NEXUS ID </h1>
             <div class="w-[35vw] mx-auto flex items-center  ">
                 <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="email_exist" type="text" name="email" placeholder="ENTER THE EMAIL OR THE NEXUX_id">
             </div>
-            
+
             <div id="search_result" class="text-center text-white font-bold"></div>
             <h1 class=" block text-center uppercase tracking-wide text-white  font-bold mb-2"> ENTER COIN AMOUNT</h1>
 
@@ -241,11 +270,11 @@
                     </label>
                     <form action="">
                         <div class="relative">
-                            <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="coins_send">
+                            <select name="crypto_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="coins_send">
 
-                                <?php foreach ($data['data'] as $crypto) : ?>
+                                <?php foreach ($data['walletdata'] as $crypto) : ?>
 
-                                    <option value="<?= $crypto['quote']['USD']['price'] . '/' . $crypto['name'] . '/' . $crypto['id']; ?>"><?= $crypto['name'] . '(' . $crypto['symbol'] . ')'; ?> </option>
+                                    <option value="<?= $crypto->id_cryptomonnaie ?>"><?= $crypto->nom ?> </option>
 
 
                                 <?php endforeach; ?>
@@ -414,43 +443,43 @@
                 $("#amout_dollar").val("INSERT THE COIN AMOUNT FIRST")
             }else{
 
-            $("#amout_dollar").val(amout_dollar);
-        }
+                $("#amout_dollar").val(amout_dollar);
+            }
             $("#crypto_id2").val(value[2]);
         });
         /************* for send**************** */
         var selectedcoin = document.getElementById('coins_send');
 
-selectedcoin.addEventListener('change', function() {
-    var selectedOption = this.options[this.selectedIndex];
-    console.log(selectedOption.value);
+        selectedcoin.addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            console.log(selectedOption.value);
 
-    var value = selectedOption.value.split('/');
-    var cryptoRate = parseFloat(value[0]);
+            var value = selectedOption.value.split('/');
+            var cryptoRate = parseFloat(value[0]);
 
-    $("#coin_amount2").trigger('input');
-});
+            $("#coin_amount2").trigger('input');
+        });
 
 
 
-$("#coin_amount2").on('input', function() {
+        $("#coin_amount2").on('input', function() {
 
-    var coin_amount = parseFloat($(this).val());
-    var selectedOption = selectElement.options[selectedcoin.selectedIndex];
-    var value = selectedOption.value.split('/');
+            var coin_amount = parseFloat($(this).val());
+            var selectedOption = selectElement.options[selectedcoin.selectedIndex];
+            var value = selectedOption.value.split('/');
 
-    var amout_dollar = coin_amount * value[0];
- if(isNaN(amout_dollar)){
-    $("#amout_dollar_send").val(" enter the coin amount first");
- }else{ $("#amout_dollar_send").val(amout_dollar);}
-   
-    $("#crypto_id3").val(value[2]);
-});
+            var amout_dollar = coin_amount * value[0];
+            if(isNaN(amout_dollar)){
+                $("#amout_dollar_send").val(" enter the coin amount first");
+            }else{ $("#amout_dollar_send").val(amout_dollar);}
 
-        
+            $("#crypto_id3").val(value[2]);
+        });
+
+
         $("#email_exist").keyup(function() {
             var input = $(this).val();
-          
+
             if (input != "") {
                 // alert(input);
                 const fetchUrl = '<?php echo URLROOT . '/users/check_email_or_nexusID'; ?>';
@@ -465,7 +494,7 @@ $("#coin_amount2").on('input', function() {
                     success: function(notfound) {
                         // console.log(notfound)
                         if(notfound) {
-                        $("#search_result").html(notfound);
+                            $("#search_result").html(notfound);
                         }
 
                     },
@@ -473,11 +502,11 @@ $("#coin_amount2").on('input', function() {
                         console.error('Error fetching tasks:', status, error);
                     }
                 });
-              
+
                 $("#search_result").show()
 
             } else {
-            
+
                 $("#search_result").hide()
 
             };
@@ -486,23 +515,21 @@ $("#coin_amount2").on('input', function() {
     });
     /****************************************** */
 
-        // Initialize Lucide icons
-        lucide.createIcons();
+    // Initialize Lucide icons
+    lucide.createIcons();
 
-        // Modal toggle function
-        function toggleModal(modalname) {
+    // Modal toggle function
+    function toggleModal(modalname) {
         const modal = document.getElementById(modalname);
         modal.classList.toggle('hidden');
     }
 
-        function openModal() {
+    function openModal() {
         document.getElementById("topModal").style.display = "flex";
     }
-        function closeModal() {
+    function closeModal() {
         document.getElementById("topModal").style.display = "none";
     }
 </script>
-
-
 </body>
-
+</html>

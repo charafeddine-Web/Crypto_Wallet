@@ -9,61 +9,74 @@ class TransactionController extends Controller {
 
     public function __construct() {
         $this->cryptoModel = $this->model('Crypto');
-         $this->transaction =$this->model('transact');
-         $this->user=$this->model('user');
-         $this->wallet=$this->model('wallet');
-         $this->apimodel = $this->model('APImodel');
+        $this->transaction =$this->model('transact');
+        $this->user=$this->model('user');
+        $this->wallet=$this->model('wallet');
+        $this->apimodel = $this->model('APImodel');
     }
     public function Buy_sell_page()
     {
-        $data = $this->apimodel->getdatafromapi(100);
-        // var_dump($data);
-        $_SESSION['success'] = "Buy avec success !";
+        $datafromapi = $this->apimodel->getdatafromapi(100);
+        $WATCHLISTDATA = $this->transaction->getWatchlistdata();
+        $walletdata = $this->transaction->getmyWalletdata();
+
+        $data = [
+            'watchlist' => $WATCHLISTDATA,
+            'walletdata' => $walletdata
+        ];
+
 
         $this->view('send',$data);
-        
+
     }
     /**************buy transac************* */
     public function add_transac()
-    { 
-        
+    {
+
         $data = [
-            'cryptoid' => $_POST['cryptoid'],
-            'coin' => $_POST['coin'],
+            'cryptoid' => $_POST['crypto_id'],
+            'coin' => isset($_POST['coin']) ? $_POST['coin'] : '',
             'amount' => $_POST['amount'],
             'cryptoamount' => $_POST['cryptoamount'],
             'type_transac'=>'buy'
         ];
-        $this->transaction->buy_transac($data);
-        $this->wallet->add_to_wallet($data);
-        $this->Buy_sell_page();
-        
+
+        $transactionSuccess = $this->transaction->buy_transac($data);
+        if ($transactionSuccess) {
+            $this->wallet->add_to_wallet($data);
+            $_SESSION['success'] = "Transaction effectuée avec succès !";
+        } else {
+            $_SESSION['error'] = "Échec de la transaction.";
+        }
+        header('Location: '.URLROOT.'/TransactionController/Buy_sell_page');
+
     }
-     public function sell_transac(){
-        
+    public function sell_transac(){
+
         $data = [
-            'cryptoid' => $_POST['cryptoid'],
+            'cryptoid' => $_POST['crypto_id'],
             'cryptoamount' => $_POST['coin_amount'],
             'type_transac'=>'sell'
         ];
-        // check if i have the amount 
+        // check if i have the amount
         $result = $this->wallet->wallet_sell($data);
 
         if($result){
             $this->transaction->sell_transac($data);
             $_SESSION['success'] = "Sell avec success !";
-            $this->Buy_sell_page();
-    
+            header('Location: '.URLROOT.'/TransactionController/Buy_sell_page');
+            exit();
+
         }else{
             $_SESSION['error'] = "Not enough funds in your wallet";
             header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
             exit();
         }
-        
-     }
+
+    }
     public function send_transac(){
 
-        $coin = $this->wallet->check_Qte_Sel($_POST['cryptoid'], $_POST['coin_amount']);
+        $coin = $this->wallet->check_Qte_Sel($_POST['crypto_id'], $_POST['coin_amount']);
         if (!$coin) {
             $_SESSION['error'] = "Not enough funds in your wallet";
             header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
@@ -90,7 +103,7 @@ class TransactionController extends Controller {
 
         $data = [
             'receiver_email' => $_POST['email'],
-            'cryptoid' => $_POST['cryptoid'],
+            'cryptoid' => $_POST['crypto_id'],
             'coin_amount' => $_POST['coin_amount'],
             'type_transac'=>'send'
         ];
@@ -98,7 +111,7 @@ class TransactionController extends Controller {
         if($this->transaction->send_coin($data)){
             $result = $this->wallet->wallet_sell($data);
             $receiver=$this->wallet->wallet_receiver($data);
-            $_SESSION['success'] = "you have send ".$data['coin_amount']." coins to user ID:'". $data['nexusid'] ."' successfully!";
+            $_SESSION['success'] = "you have send ".$data['coin_amount']." coins to user :'". $data['receiver_email'] ."' successfully!";
 
             header('Location: /Crypto_Wallet/TransactionController/Buy_sell_page');
             exit();
@@ -107,4 +120,3 @@ class TransactionController extends Controller {
     }
 
 }
-
