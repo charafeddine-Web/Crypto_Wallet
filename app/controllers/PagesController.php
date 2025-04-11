@@ -73,4 +73,8 @@ class PagesController extends Controller
         $this->view('crypto_wallet', $data);
     }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 }

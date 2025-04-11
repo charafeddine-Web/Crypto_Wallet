@@ -44,7 +44,8 @@ Class Crypto {
         }
     }
 
-    public function updateCrypto($user_id, $crypto_name, $amount) {
+    public function updateCrypto($user_id, $crypto_name, $amount)
+    {
         try {
             //knjibu ch7al endu f solde dyal dik coin
             $this->db->query("SELECT cw.*, c.nom AS crypto_name
@@ -75,7 +76,7 @@ Class Crypto {
                 $this->db->bind(':crypto_name', $crypto_name);
                 $this->db->bind(':amount', $amount);
                 $this->db->execute();
-                header("location:".URLROOT."/test");
+                header("location:" . URLROOT . "/test");
             }
             return true;
         } catch (Exception $e) {
